@@ -93,6 +93,60 @@ def palette(index):
     return {"foreground": color(0.28, 0.62), "background": color(0.97, 0.55), "border": color(0.82, 0.42)}
 
 
+LABEL_WIDTH = 150
+LABEL_SIZE = 18
+MIN_LABEL_SIZE = 11
+
+
+def text_em(text):
+    """Approximate width of bold Arial text in ems, without measuring fonts."""
+    def width(char):
+        if char in " iljI.,'|!":
+            return 0.3
+        if char in "ftr-()/":
+            return 0.38
+        if char in "mwMW":
+            return 0.88
+        if char.isupper() or char.isdigit():
+            return 0.69
+        return 0.58
+    return sum(width(char) for char in text)
+
+
+def label_lines(name):
+    """Split a name that is too wide for one line into two balanced lines."""
+    words = name.split()
+    if text_em(name) * LABEL_SIZE <= LABEL_WIDTH or len(words) < 2:
+        return [name]
+    splits = [(" ".join(words[:index]), " ".join(words[index:])) for index in range(1, len(words))]
+    return list(min(splits, key=lambda lines: max(text_em(line) for line in lines)))
+
+
+def fallback_svg(name, colors):
+    """A dummy image with the platform name, for platforms without a supplied image."""
+    lines = label_lines(name)
+    widest = max(text_em(line) for line in lines)
+    size = max(MIN_LABEL_SIZE, min(LABEL_SIZE, int(LABEL_WIDTH / widest)))
+    first_baseline = 108 if len(lines) == 1 else 99
+    label = "".join(
+        f'<text x="90" y="{first_baseline + index * (size + 4)}" text-anchor="middle" font-family="Arial,sans-serif" '
+        f'font-size="{size}" font-weight="700" fill="{colors["foreground"]}"'
+        # Only a line that is still too wide at the smallest size is squeezed to fit.
+        + (f' textLength="{LABEL_WIDTH}" lengthAdjust="spacingAndGlyphs"' if text_em(line) * size > LABEL_WIDTH else "")
+        + f'>{html.escape(line)}</text>'
+        for index, line in enumerate(lines)
+    )
+    return (
+        '<svg xmlns="http://www.w3.org/2000/svg" width="180" height="150" viewBox="0 0 180 150">'
+        f'<rect x="0.5" y="0.5" width="179" height="149" rx="12" fill="{colors["background"]}" stroke="{colors["border"]}"/>'
+        # Generic picture placeholder: a frame with a sun and two hills.
+        f'<rect x="57" y="18" width="66" height="54" rx="9" fill="#ffffff" stroke="{colors["border"]}" stroke-width="2"/>'
+        f'<circle cx="106" cy="34" r="6" fill="{colors["foreground"]}" opacity="0.5"/>'
+        f'<path d="M63 66 79 45 91 58 100 49 117 66Z" fill="{colors["foreground"]}" opacity="0.5" stroke="{colors["foreground"]}" stroke-opacity="0.5" stroke-width="2" stroke-linejoin="round"/>'
+        f'{label}</svg>\n'
+    )
+
+
 records = [{
     "id": slug(name),
     "serviceName": name,
@@ -124,14 +178,9 @@ else:
     image_dir = ROOT / "public" / "images" / "services"
     image_dir.mkdir(parents=True, exist_ok=True)
     for record in records:
-        name = record["platform"]
-        # textLength keeps long platform names readable within every card.
-        text_width = min(150, len(name) * 13)
-        colors = record["palette"]
-        svg = f'<svg xmlns="http://www.w3.org/2000/svg" width="180" height="150" viewBox="0 0 180 150"><rect x="0.5" y="0.5" width="179" height="149" rx="12" fill="{colors["background"]}" stroke="{colors["border"]}"/><text x="90" y="78" text-anchor="middle" dominant-baseline="middle" font-family="Arial,sans-serif" font-size="24" font-weight="700" fill="{colors["foreground"]}" textLength="{text_width}" lengthAdjust="spacingAndGlyphs">{html.escape(name)}</text></svg>\n'
         # Keep supplied PNGs unchanged when regenerating fallback artwork.
         image_path = image_dir / f'{record["id"]}.svg'
-        image_path.write_text(svg, encoding="utf-8")
+        image_path.write_text(fallback_svg(record["platform"], record["palette"]), encoding="utf-8")
 
 print(f'{len(records)} platforms; {sum(len(categories) for categories in groups.values())} category assignments; {len({c for categories in groups.values() for c in categories})} categories. ' + ("Verified." if "--check" in sys.argv else "Imported."))
 print(f'{sum(record["image"]["src"].startswith("/companies/") for record in records)} platforms use supplied company images; the remainder use colored fallbacks.')
