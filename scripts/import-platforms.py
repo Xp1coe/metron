@@ -3,6 +3,7 @@
 Run: python scripts/import-platforms.py [--check]
 No network lookups or invented descriptions are used.
 """
+import base64
 import collections
 import colorsys
 import html
@@ -17,6 +18,8 @@ import zipfile
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "tests" / "Platform List.xlsx"
 TARGET = ROOT / "src" / "data" / "integrations.ts"
+# A 400px copy of the supplied "Minimalist Company Logo Placeholder" image.
+PLACEHOLDER = ROOT / "scripts" / "assets" / "logo-placeholder.webp"
 NS = {"m": "http://schemas.openxmlformats.org/spreadsheetml/2006/main"}
 
 
@@ -93,9 +96,11 @@ def palette(index):
     return {"foreground": color(0.28, 0.62), "background": color(0.97, 0.55), "border": color(0.82, 0.42)}
 
 
-LABEL_WIDTH = 150
-LABEL_SIZE = 18
-MIN_LABEL_SIZE = 11
+CARD = 200
+LABEL_WIDTH = 172
+LABEL_SIZE = 22
+TWO_LINE_LABEL_SIZE = 18
+MIN_LABEL_SIZE = 12
 
 
 def text_em(text):
@@ -122,27 +127,28 @@ def label_lines(name):
     return list(min(splits, key=lambda lines: max(text_em(line) for line in lines)))
 
 
-def fallback_svg(name, colors):
-    """A dummy image with the platform name, for platforms without a supplied image."""
+def fallback_svg(name, colors, placeholder):
+    """The supplied logo placeholder with the platform name, for platforms without an image."""
     lines = label_lines(name)
     widest = max(text_em(line) for line in lines)
-    size = max(MIN_LABEL_SIZE, min(LABEL_SIZE, int(LABEL_WIDTH / widest)))
-    first_baseline = 108 if len(lines) == 1 else 99
+    largest = LABEL_SIZE if len(lines) == 1 else TWO_LINE_LABEL_SIZE
+    size = max(MIN_LABEL_SIZE, min(largest, int(LABEL_WIDTH / widest)))
+    # The placeholder artwork leaves its lower quarter free for the label.
+    first_baseline = 177 if len(lines) == 1 else 164
     label = "".join(
-        f'<text x="90" y="{first_baseline + index * (size + 4)}" text-anchor="middle" font-family="Arial,sans-serif" '
+        f'<text x="{CARD // 2}" y="{first_baseline + index * (size + 2)}" text-anchor="middle" font-family="Arial,sans-serif" '
         f'font-size="{size}" font-weight="700" fill="{colors["foreground"]}"'
         # Only a line that is still too wide at the smallest size is squeezed to fit.
         + (f' textLength="{LABEL_WIDTH}" lengthAdjust="spacingAndGlyphs"' if text_em(line) * size > LABEL_WIDTH else "")
         + f'>{html.escape(line)}</text>'
         for index, line in enumerate(lines)
     )
+    # An image inside an SVG must be embedded to load when the SVG is used as an image.
     return (
-        '<svg xmlns="http://www.w3.org/2000/svg" width="180" height="150" viewBox="0 0 180 150">'
-        f'<rect x="0.5" y="0.5" width="179" height="149" rx="12" fill="{colors["background"]}" stroke="{colors["border"]}"/>'
-        # Generic picture placeholder: a frame with a sun and two hills.
-        f'<rect x="57" y="18" width="66" height="54" rx="9" fill="#ffffff" stroke="{colors["border"]}" stroke-width="2"/>'
-        f'<circle cx="106" cy="34" r="6" fill="{colors["foreground"]}" opacity="0.5"/>'
-        f'<path d="M63 66 79 45 91 58 100 49 117 66Z" fill="{colors["foreground"]}" opacity="0.5" stroke="{colors["foreground"]}" stroke-opacity="0.5" stroke-width="2" stroke-linejoin="round"/>'
+        f'<svg xmlns="http://www.w3.org/2000/svg" width="{CARD}" height="{CARD}" viewBox="0 0 {CARD} {CARD}">'
+        f'<clipPath id="card"><rect width="{CARD}" height="{CARD}" rx="14"/></clipPath>'
+        f'<image width="{CARD}" height="{CARD}" clip-path="url(#card)" href="data:image/webp;base64,{placeholder}"/>'
+        f'<rect x="1" y="1" width="{CARD - 2}" height="{CARD - 2}" rx="13" fill="none" stroke="{colors["border"]}" stroke-width="2"/>'
         f'{label}</svg>\n'
     )
 
@@ -177,10 +183,14 @@ else:
     TARGET.write_text(content, encoding="utf-8")
     image_dir = ROOT / "public" / "images" / "services"
     image_dir.mkdir(parents=True, exist_ok=True)
+    placeholder = base64.b64encode(PLACEHOLDER.read_bytes()).decode("ascii")
     for record in records:
-        # Keep supplied PNGs unchanged when regenerating fallback artwork.
+        # Only platforms without a supplied image need fallback artwork, and
+        # supplied PNGs are never changed.
+        if not record["image"]["src"].startswith("/images/services/"):
+            continue
         image_path = image_dir / f'{record["id"]}.svg'
-        image_path.write_text(fallback_svg(record["platform"], record["palette"]), encoding="utf-8")
+        image_path.write_text(fallback_svg(record["platform"], record["palette"], placeholder), encoding="utf-8")
 
 print(f'{len(records)} platforms; {sum(len(categories) for categories in groups.values())} category assignments; {len({c for categories in groups.values() for c in categories})} categories. ' + ("Verified." if "--check" in sys.argv else "Imported."))
 print(f'{sum(record["image"]["src"].startswith("/companies/") for record in records)} platforms use supplied company images; the remainder use colored fallbacks.')
