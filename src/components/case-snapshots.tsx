@@ -11,6 +11,7 @@ import {
   IntegrationDescriptions,
   PlatformMetadata,
 } from "./integration-details";
+import { placePreview, type PreviewBox } from "@/lib/preview-position";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { selectIntegration } from "@/features/integrations/integrations-slice";
 import {
@@ -48,13 +49,10 @@ export default function CaseSnapshots({
   const filtered = Boolean(search.trim() || category);
   const filterKey = `${search}\u0000${category}`;
   const stageRef = useRef<HTMLDivElement>(null);
-  const [preview, setPreview] = useState<{
-    id: string;
-    left: number;
-    top: number;
-    width: number;
-    filterKey: string;
-  } | null>(null);
+  const [preview, setPreview] = useState<
+    (PreviewBox & { id: string; filterKey: string }) | null
+  >(null);
+  const closePreview = useCallback(() => setPreview(null), []);
   const previewItem =
     preview?.filterKey === filterKey
       ? integrations.find((item) => item.id === preview.id)
@@ -83,23 +81,7 @@ export default function CaseSnapshots({
       return;
     const stage = stageRef.current?.getBoundingClientRect();
     if (!stage) return;
-    const width = Math.min(420, stage.width - 24);
-    const height = Math.min(360, stage.height - 24);
-    const right = anchor.right - stage.left + 12;
-    const left =
-      right + width <= stage.width - 12
-        ? right
-        : anchor.left - stage.left - width - 12;
-    setPreview({
-      id,
-      width,
-      filterKey,
-      left: Math.max(12, Math.min(left, stage.width - width - 12)),
-      top: Math.max(
-        12,
-        Math.min(anchor.top - stage.top, stage.height - height - 12),
-      ),
-    });
+    setPreview({ id, filterKey, ...placePreview(stage, anchor) });
   };
 
   return (
@@ -131,9 +113,14 @@ export default function CaseSnapshots({
       >
         <div
           ref={stageRef}
-          onMouseLeave={() => setPreview(null)}
+          onMouseLeave={closePreview}
+          onBlur={(event) => {
+            // Keyboard focus moving out of the gallery leaves no tile to preview.
+            if (!event.currentTarget.contains(event.relatedTarget))
+              closePreview();
+          }}
           onKeyDown={(event) => {
-            if (event.key === "Escape") setPreview(null);
+            if (event.key === "Escape") closePreview();
           }}
           className="snapshots-spiral relative min-w-0 overflow-hidden rounded-2xl border border-slate-100 bg-[#f8faff]"
         >
@@ -146,6 +133,7 @@ export default function CaseSnapshots({
                   onSelect={(item) => dispatch(selectIntegration(item.id))}
                   onActivate={activateItem}
                   onPreview={view === "wall" ? previewItemAt : undefined}
+                  onPreviewClose={closePreview}
                 />
               ) : view === "spiral" ? (
                 <InfiniteSpiral
@@ -202,11 +190,12 @@ export default function CaseSnapshots({
           {view === "wall" && preview && previewItem && (
             <article
               aria-label="Integration Spotlight preview"
-              className="absolute z-[200001] hidden max-h-[calc(100%_-_24px)] flex-col overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xl lg:flex"
+              className="absolute z-[200001] hidden flex-col overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xl lg:flex"
               style={{
                 left: preview.left,
                 top: preview.top,
                 width: preview.width,
+                maxHeight: preview.maxHeight,
               }}
             >
               <header className="flex shrink-0 items-center justify-between border-b border-slate-100 px-4 py-2">
@@ -215,7 +204,7 @@ export default function CaseSnapshots({
                 </p>
                 <button
                   type="button"
-                  onClick={() => setPreview(null)}
+                  onClick={closePreview}
                   aria-label="Close integration preview"
                   className="flex size-9 cursor-pointer items-center justify-center rounded-md text-slate-500 hover:bg-slate-100 focus-visible:outline-2 focus-visible:outline-blue-600"
                 >
@@ -223,8 +212,10 @@ export default function CaseSnapshots({
                 </button>
               </header>
               <div
-                className="min-h-0 overflow-y-auto overscroll-contain"
+                className="min-h-0 overflow-y-auto overscroll-contain focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-blue-600"
                 tabIndex={0}
+                role="region"
+                aria-label="Integration preview content"
               >
                 <PlatformMetadata integration={previewItem} />
                 <div className="mx-4 mb-4 grid gap-3">
@@ -271,7 +262,6 @@ export default function CaseSnapshots({
         )}
       </div>
       <IntegrationModal
-        mobileOnly={view === "spiral"}
         integration={selected}
         open={modalOpen}
         onClose={closeModal}

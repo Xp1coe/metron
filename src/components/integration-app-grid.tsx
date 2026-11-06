@@ -9,6 +9,7 @@ interface IntegrationAppGridProps {
   onSelect: (item: Integration) => void;
   onActivate: () => void;
   onPreview?: (id: string, anchor: DOMRect) => void;
+  onPreviewClose?: () => void;
 }
 
 export default function IntegrationAppGrid({
@@ -17,9 +18,31 @@ export default function IntegrationAppGrid({
   onSelect,
   onActivate,
   onPreview,
+  onPreviewClose,
 }: IntegrationAppGridProps) {
   return (
-    <div className="h-full overflow-y-auto overscroll-contain p-4 sm:p-6">
+    <div
+      onScroll={(event) => {
+        if (!onPreview) return;
+        // Scrolling moves apps away from a preview anchored to them. Browsers
+        // also scroll a keyboard-focused app into view after its focus event,
+        // so follow that app while it is visible and otherwise dismiss.
+        const bounds = event.currentTarget.getBoundingClientRect();
+        const focused = event.currentTarget.querySelector<HTMLElement>(
+          "button[data-app-id]:focus-visible",
+        );
+        const anchor = focused?.getBoundingClientRect();
+        if (
+          focused?.dataset.appId &&
+          anchor &&
+          anchor.bottom > bounds.top &&
+          anchor.top < bounds.bottom
+        )
+          onPreview(focused.dataset.appId, anchor);
+        else onPreviewClose?.();
+      }}
+      className="h-full overflow-y-auto overscroll-contain p-4 sm:p-6"
+    >
       <div
         role="list"
         aria-label="Integration apps"
@@ -29,6 +52,7 @@ export default function IntegrationAppGrid({
           <div key={item.id} role="listitem">
             <button
               type="button"
+              data-app-id={item.id}
               aria-label={item.serviceName}
               aria-pressed={selectedId === item.id}
               onMouseEnter={(event) => {

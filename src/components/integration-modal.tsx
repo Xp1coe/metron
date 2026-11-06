@@ -11,14 +11,12 @@ interface IntegrationModalProps {
   integration: Integration | undefined;
   open: boolean;
   onClose: () => void;
-  mobileOnly?: boolean;
 }
 
 export default function IntegrationModal({
   integration,
   open,
   onClose,
-  mobileOnly = false,
 }: IntegrationModalProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const titleId = useId();
@@ -26,13 +24,15 @@ export default function IntegrationModal({
   useEffect(() => {
     const dialog = dialogRef.current;
     if (!dialog || !open || !integration) return;
+    // Desktop shows details in the Spotlight panel or the wall preview, so the
+    // modal closes when a resize or rotation crosses into the desktop layout.
     const desktop = window.matchMedia("(min-width: 1024px)");
-    if (mobileOnly && desktop.matches) {
+    if (desktop.matches) {
       onClose();
       return;
     }
     const handleResize = () => {
-      if (mobileOnly && desktop.matches) onClose();
+      if (desktop.matches) onClose();
     };
     desktop.addEventListener("change", handleResize);
     // The native dialog traps focus, makes the page inert, and restores focus.
@@ -44,7 +44,7 @@ export default function IntegrationModal({
       document.documentElement.style.overflow = previousOverflow;
       dialog.close();
     };
-  }, [open, integration, onClose, mobileOnly]);
+  }, [open, integration, onClose]);
 
   return (
     <dialog
