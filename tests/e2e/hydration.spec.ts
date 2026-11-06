@@ -26,7 +26,7 @@ test("initial load and reload hydrate cleanly and support platform selection", a
     await expect(page.getByRole("heading", { name: "Case Snapshots" })).toBeVisible();
     // This only changes after client effects have run; then exercise Redux handlers.
     await expect.poll(async () => page.locator('[role="listitem"]').first().evaluate(element => element.style.opacity)).not.toBe("");
-    const okta = page.getByRole("button", { name: "Okta Identity Cloud" });
+    const okta = page.getByRole("button", { name: "Okta", exact: true });
     await okta.focus();
     await expect(okta).toHaveAttribute("aria-pressed", "true");
 
@@ -36,14 +36,14 @@ test("initial load and reload hydrate cleanly and support platform selection", a
       await page.keyboard.press("Enter");
       const dialog = page.getByRole("dialog");
       await expect(dialog).toBeVisible();
-      await expect(dialog.getByRole("heading", { name: "Okta + SIEM" })).toBeVisible();
+      await expect(dialog.getByRole("heading", { name: "Okta", level: 3, exact: true })).toBeVisible();
       await expect(dialog.locator("header")).toBeVisible();
       await expect(dialog.locator("footer")).toBeVisible();
       await dialog.getByRole("button", { name: "Done", exact: true }).click();
       await expect(dialog).toBeHidden();
       await expect(okta).toBeFocused();
     } else {
-      await expect(page.locator(".snapshots-details").getByRole("heading", { name: "Okta + SIEM" })).toBeVisible();
+      await expect(page.locator(".snapshots-details").getByRole("heading", { name: "Okta", level: 3, exact: true })).toBeVisible();
       await expect(page.getByRole("dialog")).toBeHidden();
     }
   }

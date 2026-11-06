@@ -1,11 +1,11 @@
 import { createEntityAdapter, createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import { dummyIntegrations } from "@/data/integrations";
+import { integrationCatalog } from "@/data/integrations";
 import type { Integration } from "./types";
 
 const integrationsAdapter = createEntityAdapter<Integration>();
 const initialState = integrationsAdapter.setAll(
-  integrationsAdapter.getInitialState<{ selectedId: string | null }>({ selectedId: dummyIntegrations[0]?.id ?? null }),
-  dummyIntegrations,
+  integrationsAdapter.getInitialState<{ selectedId: string | null }>({ selectedId: integrationCatalog[0]?.id ?? null }),
+  integrationCatalog,
 );
 
 const integrationsSlice = createSlice({

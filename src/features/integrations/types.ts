@@ -4,5 +4,6 @@ export interface Integration {
   image: { src: string; alt: string };
   platform: string;
   category: string;
+  categories: string[];
   integrations: { id: string; name: string; description: string }[];
 }

@@ -20,7 +20,7 @@ src/
     integration-details.tsx    # Shared platform metadata and descriptions
     integration-modal.tsx      # Mobile dialog, focus handling, and scroll lock
   data/
-    integrations.ts           # Dummy services and integration descriptions
+    integrations.ts           # Imported platform catalog from the workbook
   features/integrations/
     types.ts                  # Integration data contract
     integrations-slice.ts     # Normalized entities and selected ID
@@ -39,7 +39,9 @@ The root layout wraps the app in `StoreProvider`. Its lazy initializer creates a
 
 Edit `src/data/integrations.ts`. Every service has `id`, `serviceName`, `image: { src, alt }`, `platform`, `category`, and an `integrations` array containing `id`, `name`, and `description`. Image paths resolve from `public/`.
 
-These are demonstration records, not a verified portfolio. The Armis description follows the supplied reference; other descriptions are illustrative. SVG images are text placeholders, not official brand logos.
+The catalog contains 108 platforms and all 111 assignments across eight categories from `tests/Platform List.xlsx`. Platforms listed in multiple categories are merged, with all memberships retained in `categories` and summarized in `category`. The workbook supplies names and categories only: integration labels use the platform names, descriptions remain empty, and the UI displays a missing-description message. SVG images are text placeholders, not official brand logos. Category assignments are preserved as supplied, including unusual classifications.
+
+To reimport the local workbook, run `python scripts/import-platforms.py`. To verify the catalog matches the workbook, run `python scripts/import-platforms.py --check`. The import uses Python's standard library and requires no additional packages. The reference spreadsheet remains local and untracked.
 
 Select an existing service with `dispatch(selectIntegration(id))`. Unknown IDs are ignored. `dispatch(replaceIntegrations(records))` replaces the collection, preserves an existing valid selection, selects the first available record when needed, and supports an empty collection.
 
