@@ -79,23 +79,24 @@ export default function CaseSnapshots({
     if (mobile) setModalOpen(true);
     return mobile;
   };
-  /** A click or tap shows the wall's Spotlight card beside the tile or app. */
-  const activateAt = (id: string, anchor: DOMRect) => {
-    if (openModalOnMobile() || view !== "wall") return;
+  /** Laptops and larger screens show the wall's Spotlight card beside the tile or app. */
+  const showPreviewAt = (id: string, anchor: DOMRect) => {
+    if (view !== "wall" || !window.matchMedia("(min-width: 1024px)").matches)
+      return;
     const stage = stageRef.current?.getBoundingClientRect();
     if (!stage) return;
-    // Activating the platform whose card is open closes it again.
-    setPreview((current) =>
-      current?.id === id && current.filterKey === filterKey
-        ? null
-        : { id, filterKey, ...placePreview(stage, anchor) },
-    );
+    setPreview({ id, filterKey, ...placePreview(stage, anchor) });
+  };
+  /** A tap opens the modal on small screens and the card on large touch screens. */
+  const activateAt = (id: string, anchor: DOMRect) => {
+    if (!openModalOnMobile()) showPreviewAt(id, anchor);
   };
   const previewOpen = Boolean(previewItem);
   useEffect(() => {
     if (!previewOpen) return;
-    // The card stays open until it is dismissed: a press outside the card and
-    // the tiles, Escape, or keyboard focus moving out of the gallery.
+    // Besides the pointer leaving the gallery, the card closes on a press
+    // outside the card and the tiles, on Escape, and when keyboard focus moves
+    // out of the gallery. Touch screens have no hover to end.
     const handlePointerDown = (event: PointerEvent) => {
       const target = event.target instanceof Element ? event.target : null;
       if (
@@ -154,6 +155,7 @@ export default function CaseSnapshots({
       >
         <div
           ref={stageRef}
+          onMouseLeave={closePreview}
           className="snapshots-spiral relative min-w-0 overflow-hidden rounded-2xl border border-slate-100 bg-[#f8faff]"
         >
           <ViewportGallery>
@@ -164,7 +166,8 @@ export default function CaseSnapshots({
                   selectedId={selected?.id}
                   onSelect={(item) => dispatch(selectIntegration(item.id))}
                   onActivate={activateAt}
-                  onScroll={closePreview}
+                  onHover={showPreviewAt}
+                  onHoverEnd={closePreview}
                 />
               ) : view === "spiral" ? (
                 <InfiniteSpiral
@@ -191,6 +194,7 @@ export default function CaseSnapshots({
                 <PlatformDriftWall
                   paused={modalOpen || previewOpen}
                   onActivate={activateAt}
+                  onHover={showPreviewAt}
                 />
               )
             ) : (
@@ -213,7 +217,7 @@ export default function CaseSnapshots({
                 &middot;{" "}
                 {view === "spiral"
                   ? "Hover or select a platform"
-                  : "Click a platform for details"}
+                  : "Hover or click a platform for details"}
               </span>
             </p>
           )}

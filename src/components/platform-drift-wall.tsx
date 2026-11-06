@@ -12,9 +12,11 @@ import {
 export default function PlatformDriftWall({
   paused = false,
   onActivate,
+  onHover,
 }: {
   paused?: boolean;
   onActivate: (id: string, anchor: DOMRect) => void;
+  onHover?: (id: string, anchor: DOMRect) => void;
 }) {
   const dispatch = useAppDispatch();
   const integrations = useAppSelector(selectFilteredIntegrations);
@@ -57,6 +59,9 @@ export default function PlatformDriftWall({
       }}
       onItemActivate={(item, anchor) => {
         if (typeof item.id === "string") onActivate(item.id, anchor);
+      }}
+      onItemHover={(item, anchor) => {
+        if (typeof item.id === "string") onHover?.(item.id, anchor);
       }}
     />
   );

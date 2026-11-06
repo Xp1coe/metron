@@ -57,6 +57,8 @@ export interface DriftWallProps {
   onItemSelect?: (item: DriftWallItem) => void;
   /** Click, tap, or keyboard activation, with the tile's viewport rectangle. */
   onItemActivate?: (item: DriftWallItem, anchor: DOMRect) => void;
+  /** Mouse hover or keyboard focus, with the tile's viewport rectangle. */
+  onItemHover?: (item: DriftWallItem, anchor: DOMRect) => void;
 }
 
 const EMPTY_ITEMS: DriftWallItem[] = [];
@@ -95,6 +97,7 @@ export default function DriftWall({
   paused = false,
   onItemSelect,
   onItemActivate,
+  onItemHover,
 }: DriftWallProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const planeRef = useRef<HTMLDivElement>(null);
@@ -389,7 +392,10 @@ export default function DriftWall({
       <div
         ref={planeRef}
         data-drift-plane
-        className="absolute left-1/2 top-1/2 flex flex-row [transform-style:preserve-3d] [transform-origin:50%_50%] will-change-transform"
+        // The plane, columns, tracks, and tiles share one 3D plane, so the
+        // browser can sort an empty layer in front of a tile. Only the tiles
+        // take pointer input, which keeps every tile hoverable and tappable.
+        className="pointer-events-none absolute left-1/2 top-1/2 flex flex-row [transform-style:preserve-3d] [transform-origin:50%_50%] will-change-transform"
       >
         {columnItems.map((col, column) => (
           <div
@@ -426,7 +432,7 @@ export default function DriftWall({
                   );
                   const common = {
                     className: cx(
-                      "group/tile relative block h-[calc(var(--dw-tile-h)+var(--dw-gap))] w-full flex-none cursor-pointer outline-none [transform-style:preserve-3d]",
+                      "group/tile pointer-events-auto relative block h-[calc(var(--dw-tile-h)+var(--dw-gap))] w-full flex-none cursor-pointer outline-none [transform-style:preserve-3d]",
                       activeId === key && "is-active",
                     ),
                     "data-tile-id": key,
@@ -442,9 +448,22 @@ export default function DriftWall({
                       )
                         ? 0
                         : -1,
-                    onFocus: (event: FocusEvent<HTMLElement>) =>
-                      focusTile(event, key, column, copy, index, item),
-                    onPointerEnter: () => activate(key, column, item),
+                    onFocus: (event: FocusEvent<HTMLElement>) => {
+                      focusTile(event, key, column, copy, index, item);
+                      onItemHover?.(
+                        item,
+                        event.currentTarget.getBoundingClientRect(),
+                      );
+                    },
+                    onPointerEnter: (event: PointerEvent<HTMLElement>) => {
+                      activate(key, column, item);
+                      // Touch has no hover; a tap is reported as an activation.
+                      if (event.pointerType === "mouse")
+                        onItemHover?.(
+                          item,
+                          event.currentTarget.getBoundingClientRect(),
+                        );
+                    },
                     onClick: (event: React.MouseEvent<HTMLElement>) => {
                       onItemSelect?.(item);
                       onItemActivate?.(

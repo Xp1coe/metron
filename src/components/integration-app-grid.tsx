@@ -9,7 +9,9 @@ interface IntegrationAppGridProps {
   onSelect: (item: Integration) => void;
   /** Click, tap, or keyboard activation, with the app's viewport rectangle. */
   onActivate: (id: string, anchor: DOMRect) => void;
-  onScroll?: () => void;
+  /** Mouse hover or keyboard focus, with the app's viewport rectangle. */
+  onHover?: (id: string, anchor: DOMRect) => void;
+  onHoverEnd?: () => void;
 }
 
 export default function IntegrationAppGrid({
@@ -17,11 +19,30 @@ export default function IntegrationAppGrid({
   selectedId,
   onSelect,
   onActivate,
-  onScroll,
+  onHover,
+  onHoverEnd,
 }: IntegrationAppGridProps) {
   return (
     <div
-      onScroll={onScroll}
+      onScroll={(event) => {
+        if (!onHover) return;
+        // Scrolling moves apps away from a card anchored to them. Browsers
+        // also scroll a keyboard-focused app into view after its focus event,
+        // so follow that app while it is visible and otherwise dismiss.
+        const bounds = event.currentTarget.getBoundingClientRect();
+        const focused = event.currentTarget.querySelector<HTMLElement>(
+          "button[data-app-id]:focus-visible",
+        );
+        const anchor = focused?.getBoundingClientRect();
+        if (
+          focused?.dataset.appId &&
+          anchor &&
+          anchor.bottom > bounds.top &&
+          anchor.top < bounds.bottom
+        )
+          onHover(focused.dataset.appId, anchor);
+        else onHoverEnd?.();
+      }}
       // The wall's stage fills the screen, so its grid hands scrolling back to
       // the page at either end instead of trapping touch scrolling.
       className="h-full overflow-y-auto overscroll-contain p-4 sm:p-6 [[data-gallery-view=wall]_&]:overscroll-auto"
@@ -35,10 +56,17 @@ export default function IntegrationAppGrid({
           <div key={item.id} role="listitem">
             <button
               type="button"
+              data-app-id={item.id}
               aria-label={item.serviceName}
               aria-pressed={selectedId === item.id}
-              onMouseEnter={() => onSelect(item)}
-              onFocus={() => onSelect(item)}
+              onMouseEnter={(event) => {
+                onSelect(item);
+                onHover?.(item.id, event.currentTarget.getBoundingClientRect());
+              }}
+              onFocus={(event) => {
+                onSelect(item);
+                onHover?.(item.id, event.currentTarget.getBoundingClientRect());
+              }}
               onClick={(event) => {
                 onSelect(item);
                 onActivate(
