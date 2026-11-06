@@ -11,6 +11,13 @@ import {
   type FocusEvent,
   type PointerEvent,
 } from "react";
+import {
+  centeringCopy,
+  centeringOffset,
+  trackShift,
+  wallCopies,
+  wallReach,
+} from "@/lib/drift-wall-layout";
 
 export interface DriftWallItem {
   id?: string | number;
@@ -137,6 +144,7 @@ export default function DriftWall({
     items.forEach((item, index) => cols[index % columnCount].push(item));
     return cols.map((col) => (col.length ? col : items.slice(0, 1)));
   }, [items, columnCount]);
+  const reach = wallReach(size.height);
   const columnMeta = useMemo(
     () =>
       columnItems.map((col) => {
@@ -144,12 +152,15 @@ export default function DriftWall({
           tileHeight + gap,
           col.length * (tileHeight + gap),
         );
-        return {
-          copyHeight,
-          copies: Math.max(2, Math.ceil((size.height * 1.6) / copyHeight) + 1),
-        };
+        return { copyHeight, copies: wallCopies(reach, copyHeight) };
       }),
-    [columnItems, tileHeight, gap, size.height],
+    [columnItems, tileHeight, gap, reach],
+  );
+  // The plane is as tall as its tallest track and is centered on the stage.
+  const planeHeight = useMemo(
+    () =>
+      Math.max(0, ...columnMeta.map((meta) => meta.copyHeight * meta.copies)),
+    [columnMeta],
   );
   const baseVelocities = useMemo(
     () =>
@@ -225,7 +236,7 @@ export default function DriftWall({
         }
         const track = trackRefs.current[index];
         if (track)
-          track.style.transform = `translate3d(0, ${-(offsetsRef.current[index] ?? 0)}px, 0)`;
+          track.style.transform = `translate3d(0, ${trackShift(planeHeight, reach, offsetsRef.current[index] ?? 0)}px, 0)`;
       });
       if (visible && !document.hidden && !paused && !reducedRef.current)
         frame = requestAnimationFrame(animate);
@@ -268,6 +279,8 @@ export default function DriftWall({
   }, [
     items.length,
     columnMeta,
+    planeHeight,
+    reach,
     baseVelocities,
     pauseOnHover,
     parallax,
@@ -306,16 +319,16 @@ export default function DriftWall({
     focusedColRef.current = column;
     velocitiesRef.current.fill(0);
     if (event.currentTarget.matches(":focus-visible")) {
-      const planeHeight = Math.max(
-        ...columnMeta.map((meta) => meta.copyHeight * meta.copies),
+      // Bring the keyboard-focused tile to the center of the plane.
+      offsetsRef.current[column] = centeringOffset(
+        reach,
+        columnMeta[column].copyHeight,
+        (index + 0.5) * (tileHeight + gap),
+        copy,
       );
-      offsetsRef.current[column] =
-        copy * columnMeta[column].copyHeight +
-        (index + 0.5) * (tileHeight + gap) -
-        planeHeight / 2;
       const track = trackRefs.current[column];
       if (track)
-        track.style.transform = `translate3d(0, ${-offsetsRef.current[column]}px, 0)`;
+        track.style.transform = `translate3d(0, ${trackShift(planeHeight, reach, offsetsRef.current[column])}px, 0)`;
     }
     activate(key, column, item);
     // A responsive column rebuild can reuse a tile key for a different platform.
@@ -418,8 +431,15 @@ export default function DriftWall({
                     ),
                     "data-tile-id": key,
                     "aria-label": item.title ?? "Platform",
+                    // Only the copy that can be centered without leaving a
+                    // gap in its column is reachable with the keyboard.
                     tabIndex:
-                      copy === Math.floor(columnMeta[column].copies / 2)
+                      copy ===
+                      centeringCopy(
+                        reach,
+                        columnMeta[column].copyHeight,
+                        (index + 0.5) * (tileHeight + gap),
+                      )
                         ? 0
                         : -1,
                     onFocus: (event: FocusEvent<HTMLElement>) =>
