@@ -2,17 +2,22 @@
 
 import { useId } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import SegmentedToggle from "./segmented-toggle";
 import {
   resetIntegrationFilters,
+  setGalleryLayout,
   setIntegrationCategory,
   setIntegrationSearch,
 } from "@/features/integrations/integrations-slice";
 import {
   selectAllIntegrations,
   selectFilteredIntegrations,
+  selectGalleryView,
   selectIntegrationCategories,
   selectIntegrationCategory,
   selectIntegrationSearch,
+  selectIntegrationsFiltered,
+  selectShowsAppGrid,
 } from "@/features/integrations/selectors";
 
 export default function IntegrationFilters() {
@@ -23,10 +28,13 @@ export default function IntegrationFilters() {
   const categories = useAppSelector(selectIntegrationCategories);
   const results = useAppSelector(selectFilteredIntegrations);
   const all = useAppSelector(selectAllIntegrations);
+  const view = useAppSelector(selectGalleryView);
+  const filtered = useAppSelector(selectIntegrationsFiltered);
+  const showsGrid = useAppSelector(selectShowsAppGrid);
 
   return (
     <div className="mx-auto mt-6 max-w-4xl">
-      <div className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_minmax(12rem,0.55fr)]">
+      <div className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_minmax(12rem,0.55fr)] lg:grid-cols-[minmax(0,1fr)_minmax(12rem,0.55fr)_auto]">
         <div>
           <label
             htmlFor={`${id}-search`}
@@ -82,6 +90,31 @@ export default function IntegrationFilters() {
               </option>
             ))}
           </select>
+        </div>
+        <div className="sm:col-span-2 lg:col-span-1">
+          <p
+            id={`${id}-layout`}
+            className="mb-2 block text-xs font-semibold text-slate-600"
+          >
+            Show as
+          </p>
+          <SegmentedToggle
+            label="Show as"
+            labelledBy={`${id}-layout`}
+            className="w-full"
+            value={showsGrid ? "grid" : "animation"}
+            onChange={(layout) => dispatch(setGalleryLayout(layout))}
+            options={[
+              {
+                value: "animation",
+                label: view === "wall" ? "Drift wall" : "Spiral",
+                // Search and category results are always shown as a grid.
+                disabled: filtered,
+                hint: "Reset the filters to show this view",
+              },
+              { value: "grid", label: "Grid view" },
+            ]}
+          />
         </div>
       </div>
       <div className="mt-3 flex min-h-6 items-center justify-between gap-3 text-xs text-slate-500">

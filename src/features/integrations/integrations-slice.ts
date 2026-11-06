@@ -4,7 +4,7 @@ import {
   type PayloadAction,
 } from "@reduxjs/toolkit";
 import { integrationCatalog } from "@/data/integrations";
-import type { Integration } from "./types";
+import type { GalleryLayout, GalleryView, Integration } from "./types";
 
 const integrationsAdapter = createEntityAdapter<Integration>();
 const initialState = integrationsAdapter.setAll(
@@ -12,10 +12,15 @@ const initialState = integrationsAdapter.setAll(
     selectedId: string | null;
     searchQuery: string;
     category: string;
+    view: GalleryView;
+    layout: GalleryLayout;
   }>({
     selectedId: integrationCatalog[0]?.id ?? null,
     searchQuery: "",
     category: "",
+    // Constant defaults keep the server and first client render identical.
+    view: "wall",
+    layout: "animation",
   }),
   integrationCatalog,
 );
@@ -33,6 +38,12 @@ const integrationsSlice = createSlice({
     resetIntegrationFilters(state) {
       state.searchQuery = "";
       state.category = "";
+    },
+    setGalleryView(state, action: PayloadAction<GalleryView>) {
+      state.view = action.payload;
+    },
+    setGalleryLayout(state, action: PayloadAction<GalleryLayout>) {
+      state.layout = action.payload;
     },
     selectIntegration(state, action: PayloadAction<string>) {
       if (state.entities[action.payload]) state.selectedId = action.payload;
@@ -52,6 +63,8 @@ export const {
   setIntegrationSearch,
   setIntegrationCategory,
   resetIntegrationFilters,
+  setGalleryView,
+  setGalleryLayout,
 } = integrationsSlice.actions;
 export const integrationSelectors = integrationsAdapter.getSelectors();
 export default integrationsSlice.reducer;

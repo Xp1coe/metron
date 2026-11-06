@@ -1,5 +1,4 @@
 import CaseSnapshots from "@/components/case-snapshots";
-import DriftWallSnapshots from "@/components/drift-wall-snapshots";
 import { integrationStructuredData } from "@/lib/site-metadata";
 
 export default function Home() {
@@ -15,7 +14,6 @@ export default function Home() {
         }}
       />
       <CaseSnapshots />
-      <DriftWallSnapshots />
     </main>
   );
 }

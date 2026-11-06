@@ -7,15 +7,21 @@ import ViewportGallery from "./viewport-gallery";
 import IntegrationModal from "./integration-modal";
 import IntegrationFilters from "./integration-filters";
 import IntegrationAppGrid from "./integration-app-grid";
+import SegmentedToggle from "./segmented-toggle";
 import {
   IntegrationDescriptions,
   PlatformMetadata,
 } from "./integration-details";
 import { placePreview, type PreviewBox } from "@/lib/preview-position";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { selectIntegration } from "@/features/integrations/integrations-slice";
+import {
+  selectIntegration,
+  setGalleryView,
+} from "@/features/integrations/integrations-slice";
 import {
   selectFilteredIntegrations,
+  selectGalleryView,
+  selectShowsAppGrid,
   selectVisibleSelectedIntegration,
   selectIntegrationSearch,
   selectIntegrationCategory,
@@ -36,29 +42,26 @@ const PlatformDriftWall = dynamic(() => import("./platform-drift-wall"), {
   loading: galleryLoading,
 });
 
-export default function CaseSnapshots({
-  view = "spiral",
-}: {
-  view?: "spiral" | "wall";
-}) {
+export default function CaseSnapshots() {
   const dispatch = useAppDispatch();
+  const view = useAppSelector(selectGalleryView);
+  const showsGrid = useAppSelector(selectShowsAppGrid);
   const integrations = useAppSelector(selectFilteredIntegrations);
   const selected = useAppSelector(selectVisibleSelectedIntegration);
   const search = useAppSelector(selectIntegrationSearch);
   const category = useAppSelector(selectIntegrationCategory);
-  const filtered = Boolean(search.trim() || category);
-  const filterKey = `${search}\u0000${category}`;
+  // A card belongs to the gallery it was opened in. Any change closes it.
+  const contextKey = [search, category, view, showsGrid].join("\u0000");
   const stageRef = useRef<HTMLDivElement>(null);
   const [preview, setPreview] = useState<
-    (PreviewBox & { id: string; filterKey: string }) | null
+    (PreviewBox & { id: string; contextKey: string }) | null
   >(null);
   const closePreview = useCallback(() => setPreview(null), []);
   const previewItem =
-    preview?.filterKey === filterKey
+    preview?.contextKey === contextKey
       ? integrations.find((item) => item.id === preview.id)
       : undefined;
   const [modalOpen, setModalOpen] = useState(false);
-  const Heading = view === "spiral" ? "h1" : "h2";
   const closeModal = useCallback(() => setModalOpen(false), []);
   const items = useMemo(
     () =>
@@ -85,7 +88,7 @@ export default function CaseSnapshots({
       return;
     const stage = stageRef.current?.getBoundingClientRect();
     if (!stage) return;
-    setPreview({ id, filterKey, ...placePreview(stage, anchor) });
+    setPreview({ id, contextKey, ...placePreview(stage, anchor) });
   };
   /** A tap opens the modal on small screens and the card on large touch screens. */
   const activateAt = (id: string, anchor: DOMRect) => {
@@ -128,7 +131,7 @@ export default function CaseSnapshots({
 
   return (
     <section
-      aria-labelledby={`snapshots-${view}-heading`}
+      aria-labelledby="snapshots-heading"
       data-gallery-view={view}
       className={`snapshots-section w-full ${view === "spiral" ? "mx-auto max-w-[1320px] px-4 sm:px-8 lg:px-10" : "px-4 sm:px-6 lg:px-8"}`}
     >
@@ -138,16 +141,26 @@ export default function CaseSnapshots({
             ? "CONNECTED SECURITY. IN ACTION."
             : "EXPLORE THE PLATFORM CATALOG"}
         </p>
-        <Heading
-          id={`snapshots-${view}-heading`}
+        <h1
+          id="snapshots-heading"
           className="text-3xl font-semibold tracking-[-0.035em] sm:text-4xl lg:text-5xl"
         >
           Case Snapshots
-        </Heading>
+        </h1>
         <p className="mx-auto mt-4 max-w-2xl text-sm leading-6 text-slate-500 sm:text-base sm:leading-7">
           Metron builds and supports integrations across all security and ITOps
           platforms. Explore our latest solutions in action.
         </p>
+        <SegmentedToggle
+          label="Gallery"
+          className="mt-6"
+          value={view}
+          onChange={(next) => dispatch(setGalleryView(next))}
+          options={[
+            { value: "wall", label: "Drift wall" },
+            { value: "spiral", label: "Spiral" },
+          ]}
+        />
       </header>
       <IntegrationFilters />
       <div
@@ -160,7 +173,7 @@ export default function CaseSnapshots({
         >
           <ViewportGallery>
             {items.length ? (
-              filtered ? (
+              showsGrid ? (
                 <IntegrationAppGrid
                   items={integrations}
                   selectedId={selected?.id}
@@ -204,7 +217,7 @@ export default function CaseSnapshots({
               </p>
             )}
           </ViewportGallery>
-          {items.length > 0 && !filtered && (
+          {items.length > 0 && !showsGrid && (
             <p className="pointer-events-none absolute inset-x-0 bottom-0 z-[200000] bg-gradient-to-t from-[#f8faff] via-[#f8faff]/95 to-transparent pb-5 pt-10 text-center text-xs text-slate-500">
               <span className="lg:hidden">
                 {view === "spiral"

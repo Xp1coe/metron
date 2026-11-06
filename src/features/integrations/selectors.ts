@@ -13,6 +13,14 @@ export const selectIntegrationSearch = (state: RootState) =>
   state.integrations.searchQuery;
 export const selectIntegrationCategory = (state: RootState) =>
   state.integrations.category;
+export const selectGalleryView = (state: RootState) => state.integrations.view;
+export const selectGalleryLayout = (state: RootState) =>
+  state.integrations.layout;
+/** A search or category filter always shows its results as a grid of apps. */
+export const selectIntegrationsFiltered = (state: RootState) =>
+  Boolean(state.integrations.searchQuery.trim() || state.integrations.category);
+export const selectShowsAppGrid = (state: RootState) =>
+  state.integrations.layout === "grid" || selectIntegrationsFiltered(state);
 export const selectIntegrationCategories = createSelector(
   [selectAllIntegrations],
   (items) => [...new Set(items.flatMap((item) => item.categories))].sort(),

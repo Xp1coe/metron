@@ -7,14 +7,19 @@ npm install
 npm run dev
 ```
 
-Open http://localhost:3000. The page has two **Case Snapshots** sections and no view toggle.
+Open http://localhost:3000. The page has one **Case Snapshots** section with two toggles.
 
-- **Spiral (first section).** On desktop the spiral sits beside the Integration Spotlight panel; hover, focus, or select a card to update the panel. Drag the spiral to browse platforms; rear cards fade as they cross the center. On screens narrower than 1024px, tapping a card opens a details modal with a header, scrollable content, and a footer.
-- **Drift Wall (second section).** The wall is full width and as tall as the screen. On laptops and larger screens (1024px and wider), hovering a tile with a mouse, focusing it with the keyboard, or tapping it on a touch screen shows the Spotlight card inside the gallery, beside the tile and within the gallery's bounds. The wall stays paused while the card is shown. The card closes when the pointer or keyboard focus leaves the gallery, on a press outside the card and tiles, on Escape, or with its close button. On phones and tablets narrower than 1024px there is no hover: tapping a tile opens the same details modal.
+- **Gallery toggle (below the heading):** switches between **Drift wall** and **Spiral**. Drift wall comes first and is the default.
+- **Show as toggle (beside the search and category filter):** switches between the chosen animated gallery and **Grid view**, a simple grid of app icons for every platform.
+
+The two galleries behave as follows.
+
+- **Spiral.** On desktop the spiral sits beside the Integration Spotlight panel; hover, focus, or select a card to update the panel. Drag the spiral to browse platforms; rear cards fade as they cross the center. On screens narrower than 1024px, tapping a card opens a details modal with a header, scrollable content, and a footer.
+- **Drift wall.** The wall is full width and as tall as the screen. On laptops and larger screens (1024px and wider), hovering a tile with a mouse, focusing it with the keyboard, or tapping it on a touch screen shows the Spotlight card inside the gallery, beside the tile and within the gallery's bounds. The wall stays paused while the card is shown. The card closes when the pointer or keyboard focus leaves the gallery, on a press outside the card and tiles, on Escape, or with its close button. On phones and tablets narrower than 1024px there is no hover: tapping a tile opens the same details modal.
 
 Automatic animation pauses on hover, keyboard focus, or while details are shown, and respects reduced motion.
 
-Search platform names, integration names, descriptions, or categories using the search bar. Combine the query with a category filter. Controls in both sections stay synchronized through Redux, show the result count, and offer a reset action. While a search or category filter is active, each section replaces its animation with a simple grid of app icons; clearing the filters restores the animation. Hovering or selecting an app updates the first section's Spotlight panel. In the wall's grid, hovering an app on a laptop or larger screen shows the same in-gallery Spotlight card, and tapping it on a smaller screen opens the modal. A filtered-out selection falls back to the first matching platform; no results show an empty state.
+Search platform names, integration names, descriptions, or categories using the search bar. Combine the query with a category filter. The controls keep their state in Redux, show the result count, and offer a reset action. While a search or category filter is active, the results are always shown in Grid view and the animated option is disabled; resetting the filters restores the chosen view. In the Spiral gallery, hovering or selecting an app updates the Spotlight panel. In the Drift wall gallery, hovering an app on a laptop or larger screen shows the same in-gallery Spotlight card, and tapping it on a smaller screen opens the modal. A filtered-out selection falls back to the first matching platform; no results show an empty state.
 
 ## Directory structure
 
@@ -23,21 +28,21 @@ src/
   app/                         # Next.js routes, global styles, root layout
     opengraph-image.tsx        # Generated share image
   components/
-    case-snapshots.tsx         # Both sections: filters, gallery, Spotlight, modal
+    case-snapshots.tsx         # The section: toggles, filters, gallery, Spotlight, modal
+    segmented-toggle.tsx       # Two-option toggle used for Gallery and Show as
     infinite-spiral.tsx        # Supplied React Bits component + selection support
     drift-wall.tsx             # React Bits wall with adaptive columns and selection
     platform-drift-wall.tsx    # Redux-connected wall using the same catalog
-    drift-wall-snapshots.tsx   # Separate wall section rendered below the spiral
     viewport-gallery.tsx      # Mount animations when close to the viewport
     integration-details.tsx    # Shared platform metadata and descriptions
     integration-modal.tsx      # Mobile dialog, focus handling, and scroll lock
     integration-filters.tsx    # Shared search and category controls
-    integration-app-grid.tsx   # App-icon grid shown while filters are active
+    integration-app-grid.tsx   # App-icon grid for Grid view and filtered results
   data/
     integrations.ts           # Imported platform catalog from the workbook
   features/integrations/
     types.ts                  # Integration data contract
-    integrations-slice.ts     # Normalized entities, selected ID, search, category
+    integrations-slice.ts     # Entities, selected ID, search, category, gallery, layout
     selectors.ts              # Typed, memoized selectors for UI consumers
   lib/
     site-metadata.ts          # Metadata and JSON-LD image catalog
@@ -53,7 +58,7 @@ tests/store.test.ts           # Store, filtering, data integrity, palettes, imag
 tests/preview-position.test.ts # Spotlight card placement inside the gallery
 ```
 
-The root layout wraps the app in `StoreProvider`. Its lazy initializer creates an independent store for each provider, avoiding a server-side singleton. Redux contains normalized integration entities, a selected ID, the search query, and the category filter; animation frames, pointer positions, and the wall's Spotlight card position remain local to the components.
+The root layout wraps the app in `StoreProvider`. Its lazy initializer creates an independent store for each provider, avoiding a server-side singleton. Redux contains normalized integration entities, a selected ID, the search query, the category filter, the chosen gallery, and the chosen layout; animation frames, pointer positions, and the wall's Spotlight card position remain local to the components.
 
 ## Updating the data
 

@@ -8,3 +8,8 @@ export interface Integration {
   palette: { foreground: string; background: string; border: string };
   integrations: { id: string; name: string; description: string }[];
 }
+
+/** Which animated gallery the Case Snapshots section shows. */
+export type GalleryView = "wall" | "spiral";
+/** Whether platforms appear in the animated gallery or as a grid of apps. */
+export type GalleryLayout = "animation" | "grid";

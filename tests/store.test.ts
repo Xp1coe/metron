@@ -9,12 +9,18 @@ import {
   setIntegrationSearch,
   setIntegrationCategory,
   resetIntegrationFilters,
+  setGalleryView,
+  setGalleryLayout,
 } from "../src/features/integrations/integrations-slice";
 import {
   selectAllIntegrations,
   selectSelectedIntegration,
   selectFilteredIntegrations,
   selectVisibleSelectedIntegration,
+  selectGalleryView,
+  selectGalleryLayout,
+  selectIntegrationsFiltered,
+  selectShowsAppGrid,
 } from "../src/features/integrations/selectors";
 import { integrationCatalog } from "../src/data/integrations";
 
@@ -189,4 +195,32 @@ test("the workbook's category assignments are retained without fabricated descri
       item.integrations.every((integration) => integration.description === ""),
     ),
   );
+});
+
+test("the gallery defaults to the animated drift wall and a filter always shows the app grid", () => {
+  const store = makeStore();
+  assert.equal(selectGalleryView(store.getState()), "wall");
+  assert.equal(selectGalleryLayout(store.getState()), "animation");
+  assert.equal(selectShowsAppGrid(store.getState()), false);
+
+  store.dispatch(setGalleryView("spiral"));
+  assert.equal(selectGalleryView(store.getState()), "spiral");
+  store.dispatch(setGalleryLayout("grid"));
+  assert.equal(selectShowsAppGrid(store.getState()), true);
+  store.dispatch(setGalleryLayout("animation"));
+  assert.equal(selectShowsAppGrid(store.getState()), false);
+
+  store.dispatch(setIntegrationSearch("wiz"));
+  assert.equal(selectIntegrationsFiltered(store.getState()), true);
+  assert.equal(selectShowsAppGrid(store.getState()), true);
+  store.dispatch(setIntegrationSearch("   "));
+  assert.equal(selectShowsAppGrid(store.getState()), false);
+  store.dispatch(setIntegrationCategory("CSPM"));
+  assert.equal(selectShowsAppGrid(store.getState()), true);
+
+  // Resetting the filters restores the chosen layout and keeps the gallery.
+  store.dispatch(resetIntegrationFilters());
+  assert.equal(selectShowsAppGrid(store.getState()), false);
+  assert.equal(selectGalleryView(store.getState()), "spiral");
+  assert.equal(makeStore().getState().integrations.view, "wall");
 });
