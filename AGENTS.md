@@ -14,3 +14,4 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - Keep the first server and client render deterministic. Read browser APIs in effects or event handlers and use CSS for responsive layout.
 - Do not hide hydration bugs with broad `suppressHydrationWarning` usage or disable SSR as a workaround.
 - If a warning contains `bis_skin_checked`, `bis_register`, or `cz-shortcut-listen`, compare with a clean browser profile first. These attributes were observed in local browser-extension mutations, not in application markup.
+- In development, `src/components/extension-attribute-cleanup.tsx` removes those extension attributes (and `__processed_…`) before hydration. For another extension attribute, add its name there. Do not widen it to attributes the application renders.

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { Geist, Geist_Mono } from "next/font/google";
+import ExtensionAttributeCleanup from "@/components/extension-attribute-cleanup";
 import StoreProvider from "@/store/provider";
 import { siteMetadata } from "@/lib/site-metadata";
 import "./globals.css";
@@ -23,6 +24,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
+      <head>
+        <ExtensionAttributeCleanup />
+      </head>
       <body className="min-h-full flex flex-col">
         <Suspense
           fallback={

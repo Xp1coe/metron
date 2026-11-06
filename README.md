@@ -100,4 +100,8 @@ This page already builds as a prerendered route with static catalog data and loc
 
 Run this suite only on request. Install the browser once with `npx playwright install chromium`. The E2E suite starts a development server (or reuses localhost:3000) and fails on hydration warnings and uncaught browser errors on desktop and mobile, including reloads and modal interactions. Set `PLAYWRIGHT_BASE_URL` to check another running server. Development mode is intentional: production can omit attribute mismatch warnings.
 
-If your regular browser reports mismatches containing `bis_skin_checked`, `bis_register`, or `cz-shortcut-listen`, try a clean browser profile with extensions disabled. The local development logs showed these attributes being injected into the HTML before hydration. Exclude localhost from the responsible extensions or disable those extensions while developing. The application does not suppress hydration warnings.
+## Hydration warnings from browser extensions
+
+Some browser extensions add attributes such as `bis_skin_checked`, `bis_register`, `cz-shortcut-listen`, or `__processed_…` to the server-rendered HTML before React hydrates. In development React then reports "A tree hydrated but some attributes of the server rendered HTML didn't match", although the application markup is correct. The local development logs showed only these attributes in every reported mismatch.
+
+In development, `src/components/extension-attribute-cleanup.tsx` renders a small inline script in `<head>` that removes those named attributes until hydration has finished. The application does not suppress hydration warnings, so a mismatch in its own markup is still reported. The script is not rendered in production, where React does not check attributes during hydration. If another extension causes the same error, add its attribute name to that script, or disable the extension for localhost.
