@@ -1,6 +1,6 @@
 ﻿"use client";
 
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import type { InfiniteSpiralItem } from "./infinite-spiral";
 import ViewportGallery from "./viewport-gallery";
@@ -73,16 +73,57 @@ export default function CaseSnapshots({
   const selectItem = (item: InfiniteSpiralItem) => {
     if (typeof item.id === "string") dispatch(selectIntegration(item.id));
   };
-  const activateItem = () => {
-    if (window.matchMedia("(max-width: 1023px)").matches) setModalOpen(true);
+  /** Small screens show details in the modal. Returns whether it opened. */
+  const openModalOnMobile = () => {
+    const mobile = window.matchMedia("(max-width: 1023px)").matches;
+    if (mobile) setModalOpen(true);
+    return mobile;
   };
-  const previewItemAt = (id: string, anchor: DOMRect) => {
-    if (view !== "wall" || !window.matchMedia("(min-width: 1024px)").matches)
-      return;
+  /** A click or tap shows the wall's Spotlight card beside the tile or app. */
+  const activateAt = (id: string, anchor: DOMRect) => {
+    if (openModalOnMobile() || view !== "wall") return;
     const stage = stageRef.current?.getBoundingClientRect();
     if (!stage) return;
-    setPreview({ id, filterKey, ...placePreview(stage, anchor) });
+    // Activating the platform whose card is open closes it again.
+    setPreview((current) =>
+      current?.id === id && current.filterKey === filterKey
+        ? null
+        : { id, filterKey, ...placePreview(stage, anchor) },
+    );
   };
+  const previewOpen = Boolean(previewItem);
+  useEffect(() => {
+    if (!previewOpen) return;
+    // The card stays open until it is dismissed: a press outside the card and
+    // the tiles, Escape, or keyboard focus moving out of the gallery.
+    const handlePointerDown = (event: PointerEvent) => {
+      const target = event.target instanceof Element ? event.target : null;
+      if (
+        !target ||
+        !stageRef.current?.contains(target) ||
+        !target.closest("button, [data-spotlight-card]")
+      )
+        closePreview();
+    };
+    const handleFocusIn = (event: FocusEvent) => {
+      if (
+        event.target instanceof Node &&
+        !stageRef.current?.contains(event.target)
+      )
+        closePreview();
+    };
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") closePreview();
+    };
+    document.addEventListener("pointerdown", handlePointerDown);
+    document.addEventListener("focusin", handleFocusIn);
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("pointerdown", handlePointerDown);
+      document.removeEventListener("focusin", handleFocusIn);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [previewOpen, closePreview]);
 
   return (
     <section
@@ -113,15 +154,6 @@ export default function CaseSnapshots({
       >
         <div
           ref={stageRef}
-          onMouseLeave={closePreview}
-          onBlur={(event) => {
-            // Keyboard focus moving out of the gallery leaves no tile to preview.
-            if (!event.currentTarget.contains(event.relatedTarget))
-              closePreview();
-          }}
-          onKeyDown={(event) => {
-            if (event.key === "Escape") closePreview();
-          }}
           className="snapshots-spiral relative min-w-0 overflow-hidden rounded-2xl border border-slate-100 bg-[#f8faff]"
         >
           <ViewportGallery>
@@ -131,9 +163,8 @@ export default function CaseSnapshots({
                   items={integrations}
                   selectedId={selected?.id}
                   onSelect={(item) => dispatch(selectIntegration(item.id))}
-                  onActivate={activateItem}
-                  onPreview={view === "wall" ? previewItemAt : undefined}
-                  onPreviewClose={closePreview}
+                  onActivate={activateAt}
+                  onScroll={closePreview}
                 />
               ) : view === "spiral" ? (
                 <InfiniteSpiral
@@ -154,13 +185,12 @@ export default function CaseSnapshots({
                   paused={modalOpen}
                   selectedId={selected?.id}
                   onItemSelect={selectItem}
-                  onItemActivate={activateItem}
+                  onItemActivate={openModalOnMobile}
                 />
               ) : (
                 <PlatformDriftWall
-                  paused={modalOpen || Boolean(previewItem)}
-                  onActivate={activateItem}
-                  onPreview={previewItemAt}
+                  paused={modalOpen || previewOpen}
+                  onActivate={activateAt}
                 />
               )
             ) : (
@@ -183,13 +213,14 @@ export default function CaseSnapshots({
                 &middot;{" "}
                 {view === "spiral"
                   ? "Hover or select a platform"
-                  : "Hover or click a platform for details"}
+                  : "Click a platform for details"}
               </span>
             </p>
           )}
           {view === "wall" && preview && previewItem && (
             <article
               aria-label="Integration Spotlight preview"
+              data-spotlight-card
               className="absolute z-[200001] hidden flex-col overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xl lg:flex"
               style={{
                 left: preview.left,

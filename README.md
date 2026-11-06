@@ -10,11 +10,11 @@ npm run dev
 Open http://localhost:3000. The page has two **Case Snapshots** sections and no view toggle.
 
 - **Spiral (first section).** On desktop the spiral sits beside the Integration Spotlight panel; hover, focus, or select a card to update the panel. Drag the spiral to browse platforms; rear cards fade as they cross the center. On screens narrower than 1024px, tapping a card opens a details modal with a header, scrollable content, and a footer.
-- **Drift Wall (second section).** The wall is full width and as tall as the screen. On desktop, hovering, focusing, or clicking a tile shows the Spotlight card inside the gallery, beside the tile and within the gallery's bounds. The wall pauses while the card is shown. The card closes when the pointer or keyboard focus leaves the gallery, on Escape, or with its close button. On screens narrower than 1024px, tapping a tile opens the same details modal.
+- **Drift Wall (second section).** The wall is full width and as tall as the screen. On desktop, clicking or tapping a tile (or pressing Enter on a focused tile) shows the Spotlight card inside the gallery, beside the tile and within the gallery's bounds; hovering only pauses the wall and lifts the tile. The wall stays paused while the card is shown. The card closes when the same tile is activated again, on a press outside the card and tiles, on Escape, when keyboard focus leaves the gallery, or with its close button. On screens narrower than 1024px, tapping a tile opens the same details modal.
 
 Automatic animation pauses on hover, keyboard focus, or while details are shown, and respects reduced motion.
 
-Search platform names, integration names, descriptions, or categories using the search bar. Combine the query with a category filter. Controls in both sections stay synchronized through Redux, show the result count, and offer a reset action. While a search or category filter is active, each section replaces its animation with a simple grid of app icons; clearing the filters restores the animation. Hovering or selecting an app updates the first section's Spotlight panel, and the wall's grid shows the same in-gallery Spotlight card. A filtered-out selection falls back to the first matching platform; no results show an empty state.
+Search platform names, integration names, descriptions, or categories using the search bar. Combine the query with a category filter. Controls in both sections stay synchronized through Redux, show the result count, and offer a reset action. While a search or category filter is active, each section replaces its animation with a simple grid of app icons; clearing the filters restores the animation. Hovering or selecting an app updates the first section's Spotlight panel; in the wall's grid, clicking or tapping an app shows the same in-gallery Spotlight card. A filtered-out selection falls back to the first matching platform; no results show an empty state.
 
 ## Directory structure
 
@@ -80,7 +80,7 @@ These are the routine checks. The Playwright suite (`npm run test:e2e`) is opt-i
 
 The spiral implementation is based on the React Bits source supplied in the task. The extended API adds `selectedId`, `onItemSelect` for hover/focus/selection, `onItemActivate` for click/tap/keyboard activation, and `paused` for external control.
 
-The Drift Wall uses the other supplied React Bits component, with responsive column counts, native keyboard-operable buttons, callbacks into Redux, and visibility/reduced-motion handling. Both sections share the detail components. On desktop the spiral uses its inline panel and the wall uses the in-gallery Spotlight card; both use the modal on smaller screens. The wall's `onItemHover` callback reports the tile's bounding rectangle, and `src/lib/preview-position.ts` places the card on the tile's right or left, narrowing it when neither side has room, so it stays inside the gallery and beside the tile.
+The Drift Wall uses the other supplied React Bits component, with responsive column counts, native keyboard-operable buttons, callbacks into Redux, and visibility/reduced-motion handling. Both sections share the detail components. On desktop the spiral uses its inline panel and the wall uses the in-gallery Spotlight card; both use the modal on smaller screens. The wall's `onItemActivate` callback reports the activated tile's bounding rectangle, and `src/lib/preview-position.ts` places the card on the tile's right or left, narrowing it when neither side has room, so it stays inside the gallery and beside the tile.
 
 ## SEO and image metadata
 

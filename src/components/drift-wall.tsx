@@ -48,8 +48,8 @@ export interface DriftWallProps {
   selectedId?: string | number;
   paused?: boolean;
   onItemSelect?: (item: DriftWallItem) => void;
-  onItemActivate?: (item: DriftWallItem) => void;
-  onItemHover?: (item: DriftWallItem, anchor: DOMRect) => void;
+  /** Click, tap, or keyboard activation, with the tile's viewport rectangle. */
+  onItemActivate?: (item: DriftWallItem, anchor: DOMRect) => void;
 }
 
 const EMPTY_ITEMS: DriftWallItem[] = [];
@@ -88,7 +88,6 @@ export default function DriftWall({
   paused = false,
   onItemSelect,
   onItemActivate,
-  onItemHover,
 }: DriftWallProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const planeRef = useRef<HTMLDivElement>(null);
@@ -423,28 +422,15 @@ export default function DriftWall({
                       copy === Math.floor(columnMeta[column].copies / 2)
                         ? 0
                         : -1,
-                    onFocus: (event: FocusEvent<HTMLElement>) => {
-                      focusTile(event, key, column, copy, index, item);
-                      onItemHover?.(
-                        item,
-                        event.currentTarget.getBoundingClientRect(),
-                      );
-                    },
-                    onPointerEnter: (event: PointerEvent<HTMLElement>) => {
-                      activate(key, column, item);
-                      if (event.pointerType === "mouse")
-                        onItemHover?.(
-                          item,
-                          event.currentTarget.getBoundingClientRect(),
-                        );
-                    },
+                    onFocus: (event: FocusEvent<HTMLElement>) =>
+                      focusTile(event, key, column, copy, index, item),
+                    onPointerEnter: () => activate(key, column, item),
                     onClick: (event: React.MouseEvent<HTMLElement>) => {
                       onItemSelect?.(item);
-                      onItemHover?.(
+                      onItemActivate?.(
                         item,
                         event.currentTarget.getBoundingClientRect(),
                       );
-                      onItemActivate?.(item);
                     },
                   };
                   return item.href ? (
