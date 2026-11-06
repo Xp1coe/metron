@@ -10,7 +10,7 @@ npm run dev
 Open http://localhost:3000. The page has two **Case Snapshots** sections and no view toggle.
 
 - **Spiral (first section).** On desktop the spiral sits beside the Integration Spotlight panel; hover, focus, or select a card to update the panel. Drag the spiral to browse platforms; rear cards fade as they cross the center. On screens narrower than 1024px, tapping a card opens a details modal with a header, scrollable content, and a footer.
-- **Drift Wall (second section).** The wall is full width. On desktop, hovering, focusing, or clicking a tile shows the Spotlight card inside the gallery, beside the tile and within the gallery's bounds. The wall pauses while the card is shown. The card closes when the pointer or keyboard focus leaves the gallery, on Escape, or with its close button. On screens narrower than 1024px, tapping a tile opens the same details modal.
+- **Drift Wall (second section).** The wall is full width and as tall as the screen. On desktop, hovering, focusing, or clicking a tile shows the Spotlight card inside the gallery, beside the tile and within the gallery's bounds. The wall pauses while the card is shown. The card closes when the pointer or keyboard focus leaves the gallery, on Escape, or with its close button. On screens narrower than 1024px, tapping a tile opens the same details modal.
 
 Automatic animation pauses on hover, keyboard focus, or while details are shown, and respects reduced motion.
 

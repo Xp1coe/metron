@@ -41,7 +41,9 @@ export default function IntegrationAppGrid({
           onPreview(focused.dataset.appId, anchor);
         else onPreviewClose?.();
       }}
-      className="h-full overflow-y-auto overscroll-contain p-4 sm:p-6"
+      // The wall's stage fills the screen, so its grid hands scrolling back to
+      // the page at either end instead of trapping touch scrolling.
+      className="h-full overflow-y-auto overscroll-contain p-4 sm:p-6 [[data-gallery-view=wall]_&]:overscroll-auto"
     >
       <div
         role="list"

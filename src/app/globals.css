@@ -21,6 +21,11 @@ button { font: inherit; }
   height: clamp(15rem, calc(100svh - 23rem), 40rem);
 }
 
+/* The Drift Wall fills the screen instead of fitting below the filters. */
+.snapshots-section[data-gallery-view="wall"] .snapshots-spiral {
+  height: max(18rem, 100svh);
+}
+
 .integration-modal {
   margin: auto;
   width: min(36rem, calc(100vw - 2rem));
