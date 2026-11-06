@@ -1,0 +1,58 @@
+@import "tailwindcss";
+:root { --background: #fff; --foreground: #171717; }
+@theme inline {
+ --color-background: var(--background);
+ --color-foreground: var(--foreground);
+ --font-sans: var(--font-geist-sans);
+ --font-mono: var(--font-geist-mono);
+}
+body { background: var(--background); color: var(--foreground); font-family: Arial, Helvetica, sans-serif; }
+button { font: inherit; }
+::selection { background: #dbe7ff; }
+
+/* Viewport units follow browser chrome and device rotation without JS resizing. */
+.snapshots-section {
+  padding-block: clamp(1.5rem, 4svh, 3rem);
+}
+.snapshots-grid {
+  margin-top: clamp(1.25rem, 3svh, 2rem);
+}
+.snapshots-spiral {
+  height: clamp(15rem, calc(100svh - 16rem), 40rem);
+}
+
+.integration-modal {
+  margin: auto;
+  width: min(36rem, calc(100vw - 2rem));
+  max-width: none;
+  max-height: calc(100dvh - 2rem);
+  overflow: hidden;
+}
+.integration-modal[open] {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+}
+.integration-modal::backdrop {
+  background: rgb(15 23 42 / 55%);
+  backdrop-filter: blur(4px);
+}
+
+@media (min-width: 1024px) {
+  .snapshots-section {
+    --snapshots-stage-height: clamp(18rem, calc(100svh - 16rem), 40rem);
+  }
+  .snapshots-spiral {
+    height: var(--snapshots-stage-height);
+  }
+  .snapshots-details {
+    display: flex;
+    flex-direction: column;
+    max-height: var(--snapshots-stage-height);
+  }
+  .snapshots-details > p, .snapshots-details > div {
+    flex-shrink: 0;
+  }
+  .snapshots-card {
+    flex-shrink: 1;
+  }
+}
