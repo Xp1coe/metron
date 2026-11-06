@@ -41,3 +41,54 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local reference material and tool output (kept on disk, not published)
+/HANDOFF.md
+/tests/Platform List.xlsx
+/.playwright-mcp/
+
+# supplied company files the catalog does not reference; a newly referenced
+# image is not listed here, so it still shows up as untracked
+/public/companies/6538e304999cac527a44f412_docsx2_min_webp_4_6a52676f9f.png
+/public/companies/6538e304999cac527a44f412_docsx2_min_webp_5_59c372301d.png
+/public/companies/6538e304999cac527a44f412_docsx2_min_webp_6_7c6a9d0d1a.png
+/public/companies/address_Logo_650f278fae.png
+/public/companies/Adv1_d4db79f44c.png
+/public/companies/Adv2_f1cc9c9f4b.png
+/public/companies/Adv3_06fea2de2a.png
+/public/companies/Adv4_9b067a4ae0.png
+/public/companies/Adv5_196fd0ee75.png
+/public/companies/alto_dd595bf47d.png
+/public/companies/Attivo_9a4654ceaf.png
+/public/companies/awards1_274de0135f.png
+/public/companies/awards2_d7dbf43762.png
+/public/companies/Broadcom_b617f36fd4.png
+/public/companies/contact_Logo_18d2a05455.png
+/public/companies/Cybereason_a1405ec85b.png
+/public/companies/cylus_81eaecedbf.png
+/public/companies/Devo_d09a484004.png
+/public/companies/E_mail_icon_93be055024.png
+/public/companies/Extra_Hop_a83ffba8c9.png
+/public/companies/Fireeye_7c24879be8.png
+/public/companies/Flash_Point_69e69d4f46.png
+/public/companies/Fortinet_463081298c.png
+/public/companies/Frame_159_1bb001f632.png
+/public/companies/Group_1171276910_1_8506ef0590.png
+/public/companies/Group_31_520914c745.png
+/public/companies/Group_45_411bf1546a.png
+/public/companies/Integration_Framework_8a0d2b3349.png
+/public/companies/Integration_Services_84b18facbf.png
+/public/companies/Link_8ccb4765e9.png
+/public/companies/metron-platform-logos.zip
+/public/companies/Partner_Slider1_3fd33bde9d.png
+/public/companies/platform-9.png
+/public/companies/Proof_Point_3da07e0c1f.png
+/public/companies/QA_Automation_b3cc69013f.png
+/public/companies/Sales_Force_6e374695e3.png
+/public/companies/Service_Now_adeb1fc6f6.png
+/public/companies/Snyk_2c8eb84ac0.png
+/public/companies/vector_25db905557.png
+/public/companies/Vector_3_2_f375ddcff8.png
+/public/companies/Vector_4_042f52a25d.png
+/public/companies/VM_Ware_73314d244d.png
+/public/companies/Zero_Fox_59e0aa9410.png
