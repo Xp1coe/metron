@@ -5,5 +5,6 @@ export interface Integration {
   platform: string;
   category: string;
   categories: string[];
+  palette: { foreground: string; background: string; border: string };
   integrations: { id: string; name: string; description: string }[];
 }

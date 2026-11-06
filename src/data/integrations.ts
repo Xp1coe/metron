@@ -3,7 +3,7 @@ import type { Integration } from "@/features/integrations/types";
 /** Imported from tests/Platform List.xlsx. Names and category assignments are preserved.
  * The workbook does not supply logos, integration titles, or descriptions.
  * Platform names serve as integration labels; descriptions remain empty.
- * Local SVGs are text placeholders, not official brand artwork.
+ * Supplied company images are used when matched; colored SVGs are fallbacks.
  * Regenerate with: python scripts/import-platforms.py
  */
 export const integrationCatalog: Integration[] = [
@@ -11,14 +11,19 @@ export const integrationCatalog: Integration[] = [
     "id": "qualys",
     "serviceName": "Qualys",
     "image": {
-      "src": "/images/services/qualys.svg",
-      "alt": "Qualys"
+      "src": "/companies/Qualys_b5822dab3b.png",
+      "alt": "Qualys platform integration listed under Threat Intelligence"
     },
     "platform": "Qualys",
     "category": "Threat Intelligence",
     "categories": [
       "Threat Intelligence"
     ],
+    "palette": {
+      "foreground": "#741b1b",
+      "background": "#fcf3f3",
+      "border": "#e4bebe"
+    },
     "integrations": [
       {
         "id": "qualys-integration",
@@ -31,14 +36,19 @@ export const integrationCatalog: Integration[] = [
     "id": "radiflow",
     "serviceName": "Radiflow",
     "image": {
-      "src": "/images/services/radiflow.svg",
-      "alt": "Radiflow"
+      "src": "/companies/Radiflow_f08739431c.png",
+      "alt": "Radiflow platform integration listed under Threat Intelligence"
     },
     "platform": "Radiflow",
     "category": "Threat Intelligence",
     "categories": [
       "Threat Intelligence"
     ],
+    "palette": {
+      "foreground": "#1b3574",
+      "background": "#f3f6fc",
+      "border": "#bec9e4"
+    },
     "integrations": [
       {
         "id": "radiflow-integration",
@@ -52,13 +62,18 @@ export const integrationCatalog: Integration[] = [
     "serviceName": "Recorded Future",
     "image": {
       "src": "/images/services/recorded-future.svg",
-      "alt": "Recorded Future"
+      "alt": "Recorded Future platform integration listed under Threat Intelligence"
     },
     "platform": "Recorded Future",
     "category": "Threat Intelligence",
     "categories": [
       "Threat Intelligence"
     ],
+    "palette": {
+      "foreground": "#4f741b",
+      "background": "#f8fcf3",
+      "border": "#d4e4be"
+    },
     "integrations": [
       {
         "id": "recorded-future-integration",
@@ -72,13 +87,18 @@ export const integrationCatalog: Integration[] = [
     "serviceName": "Reftab",
     "image": {
       "src": "/images/services/reftab.svg",
-      "alt": "Reftab"
+      "alt": "Reftab platform integration listed under Threat Intelligence"
     },
     "platform": "Reftab",
     "category": "Threat Intelligence",
     "categories": [
       "Threat Intelligence"
     ],
+    "palette": {
+      "foreground": "#741b69",
+      "background": "#fcf3fb",
+      "border": "#e4bee0"
+    },
     "integrations": [
       {
         "id": "reftab-integration",
@@ -92,13 +112,18 @@ export const integrationCatalog: Integration[] = [
     "serviceName": "Remediant",
     "image": {
       "src": "/images/services/remediant.svg",
-      "alt": "Remediant"
+      "alt": "Remediant platform integration listed under Threat Intelligence"
     },
     "platform": "Remediant",
     "category": "Threat Intelligence",
     "categories": [
       "Threat Intelligence"
     ],
+    "palette": {
+      "foreground": "#1b7465",
+      "background": "#f3fcfa",
+      "border": "#bee4de"
+    },
     "integrations": [
       {
         "id": "remediant-integration",
@@ -111,14 +136,19 @@ export const integrationCatalog: Integration[] = [
     "id": "safebreach",
     "serviceName": "SafeBreach",
     "image": {
-      "src": "/images/services/safebreach.svg",
-      "alt": "SafeBreach"
+      "src": "/companies/Safe_Breach_1_8bc0dc5da0.png",
+      "alt": "SafeBreach platform integration listed under Threat Intelligence"
     },
     "platform": "SafeBreach",
     "category": "Threat Intelligence",
     "categories": [
       "Threat Intelligence"
     ],
+    "palette": {
+      "foreground": "#744b1b",
+      "background": "#fcf8f3",
+      "border": "#e4d3be"
+    },
     "integrations": [
       {
         "id": "safebreach-integration",
@@ -131,14 +161,19 @@ export const integrationCatalog: Integration[] = [
     "id": "sentinelone",
     "serviceName": "SentinelOne",
     "image": {
-      "src": "/images/services/sentinelone.svg",
-      "alt": "SentinelOne"
+      "src": "/companies/Sentinel_One_3da768e055.png",
+      "alt": "SentinelOne platform integration listed under Threat Intelligence"
     },
     "platform": "SentinelOne",
     "category": "Threat Intelligence",
     "categories": [
       "Threat Intelligence"
     ],
+    "palette": {
+      "foreground": "#311b74",
+      "background": "#f5f3fc",
+      "border": "#c7bee4"
+    },
     "integrations": [
       {
         "id": "sentinelone-integration",
@@ -151,14 +186,19 @@ export const integrationCatalog: Integration[] = [
     "id": "silverfort",
     "serviceName": "Silverfort",
     "image": {
-      "src": "/images/services/silverfort.svg",
-      "alt": "Silverfort"
+      "src": "/companies/Silver_Fort_cf0453128c.png",
+      "alt": "Silverfort platform integration listed under Threat Intelligence"
     },
     "platform": "Silverfort",
     "category": "Threat Intelligence",
     "categories": [
       "Threat Intelligence"
     ],
+    "palette": {
+      "foreground": "#1f741b",
+      "background": "#f4fcf3",
+      "border": "#bfe4be"
+    },
     "integrations": [
       {
         "id": "silverfort-integration",
@@ -172,13 +212,18 @@ export const integrationCatalog: Integration[] = [
     "serviceName": "Snowflake",
     "image": {
       "src": "/images/services/snowflake.svg",
-      "alt": "Snowflake"
+      "alt": "Snowflake platform integration listed under Threat Intelligence"
     },
     "platform": "Snowflake",
     "category": "Threat Intelligence",
     "categories": [
       "Threat Intelligence"
     ],
+    "palette": {
+      "foreground": "#741b39",
+      "background": "#fcf3f6",
+      "border": "#e4becb"
+    },
     "integrations": [
       {
         "id": "snowflake-integration",
@@ -191,14 +236,19 @@ export const integrationCatalog: Integration[] = [
     "id": "splunk",
     "serviceName": "Splunk",
     "image": {
-      "src": "/images/services/splunk.svg",
-      "alt": "Splunk"
+      "src": "/companies/Splunk_f8605e6a71.png",
+      "alt": "Splunk platform integration listed under Threat Intelligence"
     },
     "platform": "Splunk",
     "category": "Threat Intelligence",
     "categories": [
       "Threat Intelligence"
     ],
+    "palette": {
+      "foreground": "#1b5374",
+      "background": "#f3f8fc",
+      "border": "#bed6e4"
+    },
     "integrations": [
       {
         "id": "splunk-integration",
@@ -211,14 +261,19 @@ export const integrationCatalog: Integration[] = [
     "id": "tanium",
     "serviceName": "Tanium",
     "image": {
-      "src": "/images/services/tanium.svg",
-      "alt": "Tanium"
+      "src": "/companies/Tanium_1_a493c87d69.png",
+      "alt": "Tanium platform integration listed under Threat Intelligence"
     },
     "platform": "Tanium",
     "category": "Threat Intelligence",
     "categories": [
       "Threat Intelligence"
     ],
+    "palette": {
+      "foreground": "#6c741b",
+      "background": "#fbfcf3",
+      "border": "#e1e4be"
+    },
     "integrations": [
       {
         "id": "tanium-integration",
@@ -231,14 +286,19 @@ export const integrationCatalog: Integration[] = [
     "id": "threatquotient",
     "serviceName": "ThreatQuotient",
     "image": {
-      "src": "/images/services/threatquotient.svg",
-      "alt": "ThreatQuotient"
+      "src": "/companies/Threat_Quotient_815e163598.png",
+      "alt": "ThreatQuotient platform integration listed under Threat Intelligence"
     },
     "platform": "ThreatQuotient",
     "category": "Threat Intelligence",
     "categories": [
       "Threat Intelligence"
     ],
+    "palette": {
+      "foreground": "#611b74",
+      "background": "#faf3fc",
+      "border": "#dcbee4"
+    },
     "integrations": [
       {
         "id": "threatquotient-integration",
@@ -251,14 +311,19 @@ export const integrationCatalog: Integration[] = [
     "id": "trellix",
     "serviceName": "Trellix",
     "image": {
-      "src": "/images/services/trellix.svg",
-      "alt": "Trellix"
+      "src": "/companies/Trellix_032c6b8a24.png",
+      "alt": "Trellix platform integration listed under Threat Intelligence"
     },
     "platform": "Trellix",
     "category": "Threat Intelligence",
     "categories": [
       "Threat Intelligence"
     ],
+    "palette": {
+      "foreground": "#1b7447",
+      "background": "#f3fcf7",
+      "border": "#bee4d1"
+    },
     "integrations": [
       {
         "id": "trellix-integration",
@@ -271,14 +336,19 @@ export const integrationCatalog: Integration[] = [
     "id": "vectra",
     "serviceName": "Vectra",
     "image": {
-      "src": "/images/services/vectra.svg",
-      "alt": "Vectra"
+      "src": "/companies/Vectra_cf10f1c30c.png",
+      "alt": "Vectra platform integration listed under Threat Intelligence"
     },
     "platform": "Vectra",
     "category": "Threat Intelligence",
     "categories": [
       "Threat Intelligence"
     ],
+    "palette": {
+      "foreground": "#742d1b",
+      "background": "#fcf5f3",
+      "border": "#e4c6be"
+    },
     "integrations": [
       {
         "id": "vectra-integration",
@@ -292,13 +362,18 @@ export const integrationCatalog: Integration[] = [
     "serviceName": "VirusTotal",
     "image": {
       "src": "/images/services/virustotal.svg",
-      "alt": "VirusTotal"
+      "alt": "VirusTotal platform integration listed under Threat Intelligence"
     },
     "platform": "VirusTotal",
     "category": "Threat Intelligence",
     "categories": [
       "Threat Intelligence"
     ],
+    "palette": {
+      "foreground": "#1b2374",
+      "background": "#f3f4fc",
+      "border": "#bec1e4"
+    },
     "integrations": [
       {
         "id": "virustotal-integration",
@@ -311,8 +386,8 @@ export const integrationCatalog: Integration[] = [
     "id": "wiz",
     "serviceName": "Wiz",
     "image": {
-      "src": "/images/services/wiz.svg",
-      "alt": "Wiz"
+      "src": "/companies/Wiz_1_feefb1b6ba.png",
+      "alt": "Wiz platform integration listed under CSPM and Email Security"
     },
     "platform": "Wiz",
     "category": "CSPM, Email Security",
@@ -320,6 +395,11 @@ export const integrationCatalog: Integration[] = [
       "CSPM",
       "Email Security"
     ],
+    "palette": {
+      "foreground": "#3d741b",
+      "background": "#f6fcf3",
+      "border": "#cce4be"
+    },
     "integrations": [
       {
         "id": "wiz-integration",
@@ -332,8 +412,8 @@ export const integrationCatalog: Integration[] = [
     "id": "orca-security",
     "serviceName": "Orca Security",
     "image": {
-      "src": "/images/services/orca-security.svg",
-      "alt": "Orca Security"
+      "src": "/companies/Orca_Security_d259f67c28.png",
+      "alt": "Orca Security platform integration listed under CSPM and Cloud Security"
     },
     "platform": "Orca Security",
     "category": "CSPM, Cloud Security",
@@ -341,6 +421,11 @@ export const integrationCatalog: Integration[] = [
       "CSPM",
       "Cloud Security"
     ],
+    "palette": {
+      "foreground": "#741b56",
+      "background": "#fcf3f9",
+      "border": "#e4bed8"
+    },
     "integrations": [
       {
         "id": "orca-security-integration",
@@ -353,14 +438,19 @@ export const integrationCatalog: Integration[] = [
     "id": "palo-alto-networks-prisma-cloud",
     "serviceName": "Palo Alto Networks Prisma Cloud",
     "image": {
-      "src": "/images/services/palo-alto-networks-prisma-cloud.svg",
-      "alt": "Palo Alto Networks Prisma Cloud"
+      "src": "/companies/Palo_Alto_Networks_0c29017a03.png",
+      "alt": "Palo Alto Networks Prisma Cloud platform integration listed under CSPM"
     },
     "platform": "Palo Alto Networks Prisma Cloud",
     "category": "CSPM",
     "categories": [
       "CSPM"
     ],
+    "palette": {
+      "foreground": "#1b7074",
+      "background": "#f3fbfc",
+      "border": "#bee3e4"
+    },
     "integrations": [
       {
         "id": "palo-alto-networks-prisma-cloud-integration",
@@ -373,14 +463,19 @@ export const integrationCatalog: Integration[] = [
     "id": "check-point-cloudguard",
     "serviceName": "Check Point CloudGuard",
     "image": {
-      "src": "/images/services/check-point-cloudguard.svg",
-      "alt": "Check Point CloudGuard"
+      "src": "/companies/Checkpoint_379f9eb3c1.png",
+      "alt": "Check Point CloudGuard platform integration listed under CSPM"
     },
     "platform": "Check Point CloudGuard",
     "category": "CSPM",
     "categories": [
       "CSPM"
     ],
+    "palette": {
+      "foreground": "#745d1b",
+      "background": "#fcf9f3",
+      "border": "#e4dbbe"
+    },
     "integrations": [
       {
         "id": "check-point-cloudguard-integration",
@@ -393,14 +488,19 @@ export const integrationCatalog: Integration[] = [
     "id": "microsoft-defender-for-cloud",
     "serviceName": "Microsoft Defender for Cloud",
     "image": {
-      "src": "/images/services/microsoft-defender-for-cloud.svg",
-      "alt": "Microsoft Defender for Cloud"
+      "src": "/companies/Microsoft_bd16e6984a.png",
+      "alt": "Microsoft Defender for Cloud platform integration listed under CSPM"
     },
     "platform": "Microsoft Defender for Cloud",
     "category": "CSPM",
     "categories": [
       "CSPM"
     ],
+    "palette": {
+      "foreground": "#431b74",
+      "background": "#f7f3fc",
+      "border": "#cfbee4"
+    },
     "integrations": [
       {
         "id": "microsoft-defender-for-cloud-integration",
@@ -414,13 +514,18 @@ export const integrationCatalog: Integration[] = [
     "serviceName": "AWS Security Hub",
     "image": {
       "src": "/images/services/aws-security-hub.svg",
-      "alt": "AWS Security Hub"
+      "alt": "AWS Security Hub platform integration listed under CSPM"
     },
     "platform": "AWS Security Hub",
     "category": "CSPM",
     "categories": [
       "CSPM"
     ],
+    "palette": {
+      "foreground": "#1b742a",
+      "background": "#f3fcf5",
+      "border": "#bee4c4"
+    },
     "integrations": [
       {
         "id": "aws-security-hub-integration",
@@ -433,14 +538,19 @@ export const integrationCatalog: Integration[] = [
     "id": "google-security-command-center",
     "serviceName": "Google Security Command Center",
     "image": {
-      "src": "/images/services/google-security-command-center.svg",
-      "alt": "Google Security Command Center"
+      "src": "/companies/Google_0ecda69f85.png",
+      "alt": "Google Security Command Center platform integration listed under CSPM"
     },
     "platform": "Google Security Command Center",
     "category": "CSPM",
     "categories": [
       "CSPM"
     ],
+    "palette": {
+      "foreground": "#741b26",
+      "background": "#fcf3f4",
+      "border": "#e4bec3"
+    },
     "integrations": [
       {
         "id": "google-security-command-center-integration",
@@ -453,14 +563,19 @@ export const integrationCatalog: Integration[] = [
     "id": "tenable-cloud-security",
     "serviceName": "Tenable Cloud Security",
     "image": {
-      "src": "/images/services/tenable-cloud-security.svg",
-      "alt": "Tenable Cloud Security"
+      "src": "/companies/Tenable_2c634cc32c.png",
+      "alt": "Tenable Cloud Security platform integration listed under CSPM"
     },
     "platform": "Tenable Cloud Security",
     "category": "CSPM",
     "categories": [
       "CSPM"
     ],
+    "palette": {
+      "foreground": "#1b4074",
+      "background": "#f3f7fc",
+      "border": "#becee4"
+    },
     "integrations": [
       {
         "id": "tenable-cloud-security-integration",
@@ -473,14 +588,19 @@ export const integrationCatalog: Integration[] = [
     "id": "rapid7-insightcloudsec",
     "serviceName": "Rapid7 InsightCloudSec",
     "image": {
-      "src": "/images/services/rapid7-insightcloudsec.svg",
-      "alt": "Rapid7 InsightCloudSec"
+      "src": "/companies/Rapid7_3169567e26.png",
+      "alt": "Rapid7 InsightCloudSec platform integration listed under CSPM"
     },
     "platform": "Rapid7 InsightCloudSec",
     "category": "CSPM",
     "categories": [
       "CSPM"
     ],
+    "palette": {
+      "foreground": "#5a741b",
+      "background": "#f9fcf3",
+      "border": "#d9e4be"
+    },
     "integrations": [
       {
         "id": "rapid7-insightcloudsec-integration",
@@ -493,14 +613,19 @@ export const integrationCatalog: Integration[] = [
     "id": "qualys-totalcloud",
     "serviceName": "Qualys TotalCloud",
     "image": {
-      "src": "/images/services/qualys-totalcloud.svg",
-      "alt": "Qualys TotalCloud"
+      "src": "/companies/Qualys_b5822dab3b.png",
+      "alt": "Qualys TotalCloud platform integration listed under CSPM"
     },
     "platform": "Qualys TotalCloud",
     "category": "CSPM",
     "categories": [
       "CSPM"
     ],
+    "palette": {
+      "foreground": "#731b74",
+      "background": "#fcf3fc",
+      "border": "#e4bee4"
+    },
     "integrations": [
       {
         "id": "qualys-totalcloud-integration",
@@ -514,13 +639,18 @@ export const integrationCatalog: Integration[] = [
     "serviceName": "CrowdStrike Falcon Cloud Security",
     "image": {
       "src": "/images/services/crowdstrike-falcon-cloud-security.svg",
-      "alt": "CrowdStrike Falcon Cloud Security"
+      "alt": "CrowdStrike Falcon Cloud Security platform integration listed under CSPM"
     },
     "platform": "CrowdStrike Falcon Cloud Security",
     "category": "CSPM",
     "categories": [
       "CSPM"
     ],
+    "palette": {
+      "foreground": "#1b745a",
+      "background": "#f3fcf9",
+      "border": "#bee4d9"
+    },
     "integrations": [
       {
         "id": "crowdstrike-falcon-cloud-security-integration",
@@ -533,14 +663,19 @@ export const integrationCatalog: Integration[] = [
     "id": "lacework-forticnapp",
     "serviceName": "Lacework FortiCNAPP",
     "image": {
-      "src": "/images/services/lacework-forticnapp.svg",
-      "alt": "Lacework FortiCNAPP"
+      "src": "/companies/Lace_Work_52d9ccb7dd.png",
+      "alt": "Lacework FortiCNAPP platform integration listed under CSPM"
     },
     "platform": "Lacework FortiCNAPP",
     "category": "CSPM",
     "categories": [
       "CSPM"
     ],
+    "palette": {
+      "foreground": "#74401b",
+      "background": "#fcf7f3",
+      "border": "#e4cebe"
+    },
     "integrations": [
       {
         "id": "lacework-forticnapp-integration",
@@ -554,7 +689,7 @@ export const integrationCatalog: Integration[] = [
     "serviceName": "Aqua Security",
     "image": {
       "src": "/images/services/aqua-security.svg",
-      "alt": "Aqua Security"
+      "alt": "Aqua Security platform integration listed under CSPM and IT Operations"
     },
     "platform": "Aqua Security",
     "category": "CSPM, IT Operations",
@@ -562,6 +697,11 @@ export const integrationCatalog: Integration[] = [
       "CSPM",
       "IT Operations"
     ],
+    "palette": {
+      "foreground": "#261b74",
+      "background": "#f4f3fc",
+      "border": "#c3bee4"
+    },
     "integrations": [
       {
         "id": "aqua-security-integration",
@@ -574,14 +714,19 @@ export const integrationCatalog: Integration[] = [
     "id": "zscaler-posture-control",
     "serviceName": "Zscaler Posture Control",
     "image": {
-      "src": "/images/services/zscaler-posture-control.svg",
-      "alt": "Zscaler Posture Control"
+      "src": "/companies/Zscaler_1b4142cede.png",
+      "alt": "Zscaler Posture Control platform integration listed under CSPM"
     },
     "platform": "Zscaler Posture Control",
     "category": "CSPM",
     "categories": [
       "CSPM"
     ],
+    "palette": {
+      "foreground": "#2a741b",
+      "background": "#f5fcf3",
+      "border": "#c4e4be"
+    },
     "integrations": [
       {
         "id": "zscaler-posture-control-integration",
@@ -595,13 +740,18 @@ export const integrationCatalog: Integration[] = [
     "serviceName": "Kubernetes",
     "image": {
       "src": "/images/services/kubernetes.svg",
-      "alt": "Kubernetes"
+      "alt": "Kubernetes platform integration listed under Email Security"
     },
     "platform": "Kubernetes",
     "category": "Email Security",
     "categories": [
       "Email Security"
     ],
+    "palette": {
+      "foreground": "#741b44",
+      "background": "#fcf3f7",
+      "border": "#e4bed0"
+    },
     "integrations": [
       {
         "id": "kubernetes-integration",
@@ -615,13 +765,18 @@ export const integrationCatalog: Integration[] = [
     "serviceName": "1Password",
     "image": {
       "src": "/images/services/1password.svg",
-      "alt": "1Password"
+      "alt": "1Password platform integration listed under Email Security"
     },
     "platform": "1Password",
     "category": "Email Security",
     "categories": [
       "Email Security"
     ],
+    "palette": {
+      "foreground": "#1b5e74",
+      "background": "#f3f9fc",
+      "border": "#bedbe4"
+    },
     "integrations": [
       {
         "id": "1password-integration",
@@ -635,13 +790,18 @@ export const integrationCatalog: Integration[] = [
     "serviceName": "Samurai XDR",
     "image": {
       "src": "/images/services/samurai-xdr.svg",
-      "alt": "Samurai XDR"
+      "alt": "Samurai XDR platform integration listed under Email Security"
     },
     "platform": "Samurai XDR",
     "category": "Email Security",
     "categories": [
       "Email Security"
     ],
+    "palette": {
+      "foreground": "#74701b",
+      "background": "#fcfbf3",
+      "border": "#e4e3be"
+    },
     "integrations": [
       {
         "id": "samurai-xdr-integration",
@@ -654,14 +814,19 @@ export const integrationCatalog: Integration[] = [
     "id": "trend-micro",
     "serviceName": "Trend Micro",
     "image": {
-      "src": "/images/services/trend-micro.svg",
-      "alt": "Trend Micro"
+      "src": "/companies/Trend_Micro_06bdc6bbbf.png",
+      "alt": "Trend Micro platform integration listed under Email Security"
     },
     "platform": "Trend Micro",
     "category": "Email Security",
     "categories": [
       "Email Security"
     ],
+    "palette": {
+      "foreground": "#561b74",
+      "background": "#f9f3fc",
+      "border": "#d7bee4"
+    },
     "integrations": [
       {
         "id": "trend-micro-integration",
@@ -674,14 +839,19 @@ export const integrationCatalog: Integration[] = [
     "id": "zscaler",
     "serviceName": "Zscaler",
     "image": {
-      "src": "/images/services/zscaler.svg",
-      "alt": "Zscaler"
+      "src": "/companies/Zscaler_1b4142cede.png",
+      "alt": "Zscaler platform integration listed under Email Security"
     },
     "platform": "Zscaler",
     "category": "Email Security",
     "categories": [
       "Email Security"
     ],
+    "palette": {
+      "foreground": "#1b743c",
+      "background": "#f3fcf6",
+      "border": "#bee4cc"
+    },
     "integrations": [
       {
         "id": "zscaler-integration",
@@ -695,13 +865,18 @@ export const integrationCatalog: Integration[] = [
     "serviceName": "Zix",
     "image": {
       "src": "/images/services/zix.svg",
-      "alt": "Zix"
+      "alt": "Zix platform integration listed under Email Security"
     },
     "platform": "Zix",
     "category": "Email Security",
     "categories": [
       "Email Security"
     ],
+    "palette": {
+      "foreground": "#74221b",
+      "background": "#fcf4f3",
+      "border": "#e4c1be"
+    },
     "integrations": [
       {
         "id": "zix-integration",
@@ -714,14 +889,19 @@ export const integrationCatalog: Integration[] = [
     "id": "votiro",
     "serviceName": "Votiro",
     "image": {
-      "src": "/images/services/votiro.svg",
-      "alt": "Votiro"
+      "src": "/companies/Votiro_17ec68d9ed.png",
+      "alt": "Votiro platform integration listed under Email Security"
     },
     "platform": "Votiro",
     "category": "Email Security",
     "categories": [
       "Email Security"
     ],
+    "palette": {
+      "foreground": "#1b2e74",
+      "background": "#f3f5fc",
+      "border": "#bec6e4"
+    },
     "integrations": [
       {
         "id": "votiro-integration",
@@ -734,14 +914,19 @@ export const integrationCatalog: Integration[] = [
     "id": "vmray",
     "serviceName": "VMRay",
     "image": {
-      "src": "/images/services/vmray.svg",
-      "alt": "VMRay"
+      "src": "/companies/VMRAY_e2c14f58bf.png",
+      "alt": "VMRay platform integration listed under Email Security"
     },
     "platform": "VMRay",
     "category": "Email Security",
     "categories": [
       "Email Security"
     ],
+    "palette": {
+      "foreground": "#48741b",
+      "background": "#f7fcf3",
+      "border": "#d1e4be"
+    },
     "integrations": [
       {
         "id": "vmray-integration",
@@ -755,13 +940,18 @@ export const integrationCatalog: Integration[] = [
     "serviceName": "Veeam",
     "image": {
       "src": "/images/services/veeam.svg",
-      "alt": "Veeam"
+      "alt": "Veeam platform integration listed under Email Security"
     },
     "platform": "Veeam",
     "category": "Email Security",
     "categories": [
       "Email Security"
     ],
+    "palette": {
+      "foreground": "#741b62",
+      "background": "#fcf3fa",
+      "border": "#e4bedd"
+    },
     "integrations": [
       {
         "id": "veeam-integration",
@@ -775,13 +965,18 @@ export const integrationCatalog: Integration[] = [
     "serviceName": "Tines",
     "image": {
       "src": "/images/services/tines.svg",
-      "alt": "Tines"
+      "alt": "Tines platform integration listed under Email Security"
     },
     "platform": "Tines",
     "category": "Email Security",
     "categories": [
       "Email Security"
     ],
+    "palette": {
+      "foreground": "#1b746c",
+      "background": "#f3fcfb",
+      "border": "#bee4e1"
+    },
     "integrations": [
       {
         "id": "tines-integration",
@@ -794,14 +989,19 @@ export const integrationCatalog: Integration[] = [
     "id": "tenable",
     "serviceName": "Tenable",
     "image": {
-      "src": "/images/services/tenable.svg",
-      "alt": "Tenable"
+      "src": "/companies/Tenable_2c634cc32c.png",
+      "alt": "Tenable platform integration listed under Email Security"
     },
     "platform": "Tenable",
     "category": "Email Security",
     "categories": [
       "Email Security"
     ],
+    "palette": {
+      "foreground": "#74521b",
+      "background": "#fcf8f3",
+      "border": "#e4d6be"
+    },
     "integrations": [
       {
         "id": "tenable-integration",
@@ -815,13 +1015,18 @@ export const integrationCatalog: Integration[] = [
     "serviceName": "Sumo Logic",
     "image": {
       "src": "/images/services/sumo-logic.svg",
-      "alt": "Sumo Logic"
+      "alt": "Sumo Logic platform integration listed under Email Security"
     },
     "platform": "Sumo Logic",
     "category": "Email Security",
     "categories": [
       "Email Security"
     ],
+    "palette": {
+      "foreground": "#381b74",
+      "background": "#f6f3fc",
+      "border": "#cabee4"
+    },
     "integrations": [
       {
         "id": "sumo-logic-integration",
@@ -835,13 +1040,18 @@ export const integrationCatalog: Integration[] = [
     "serviceName": "Symantec",
     "image": {
       "src": "/images/services/symantec.svg",
-      "alt": "Symantec"
+      "alt": "Symantec platform integration listed under Email Security"
     },
     "platform": "Symantec",
     "category": "Email Security",
     "categories": [
       "Email Security"
     ],
+    "palette": {
+      "foreground": "#1b741e",
+      "background": "#f3fcf3",
+      "border": "#bee4bf"
+    },
     "integrations": [
       {
         "id": "symantec-integration",
@@ -855,13 +1065,18 @@ export const integrationCatalog: Integration[] = [
     "serviceName": "Slack",
     "image": {
       "src": "/images/services/slack.svg",
-      "alt": "Slack"
+      "alt": "Slack platform integration listed under Email Security"
     },
     "platform": "Slack",
     "category": "Email Security",
     "categories": [
       "Email Security"
     ],
+    "palette": {
+      "foreground": "#741b32",
+      "background": "#fcf3f5",
+      "border": "#e4bec8"
+    },
     "integrations": [
       {
         "id": "slack-integration",
@@ -874,14 +1089,19 @@ export const integrationCatalog: Integration[] = [
     "id": "hackerone",
     "serviceName": "HackerOne",
     "image": {
-      "src": "/images/services/hackerone.svg",
-      "alt": "HackerOne"
+      "src": "/companies/Hacker_One_b26ee5030e.png",
+      "alt": "HackerOne platform integration listed under CNAPP"
     },
     "platform": "HackerOne",
     "category": "CNAPP",
     "categories": [
       "CNAPP"
     ],
+    "palette": {
+      "foreground": "#1b4c74",
+      "background": "#f3f8fc",
+      "border": "#bed3e4"
+    },
     "integrations": [
       {
         "id": "hackerone-integration",
@@ -894,14 +1114,19 @@ export const integrationCatalog: Integration[] = [
     "id": "honeywell",
     "serviceName": "Honeywell",
     "image": {
-      "src": "/images/services/honeywell.svg",
-      "alt": "Honeywell"
+      "src": "/companies/Honeywell_1_0978a24906.png",
+      "alt": "Honeywell platform integration listed under CNAPP"
     },
     "platform": "Honeywell",
     "category": "CNAPP",
     "categories": [
       "CNAPP"
     ],
+    "palette": {
+      "foreground": "#65741b",
+      "background": "#fafcf3",
+      "border": "#dee4be"
+    },
     "integrations": [
       {
         "id": "honeywell-integration",
@@ -914,14 +1139,19 @@ export const integrationCatalog: Integration[] = [
     "id": "ibm",
     "serviceName": "IBM",
     "image": {
-      "src": "/images/services/ibm.svg",
-      "alt": "IBM"
+      "src": "/companies/IBM_3275dda984.png",
+      "alt": "IBM platform integration listed under CNAPP"
     },
     "platform": "IBM",
     "category": "CNAPP",
     "categories": [
       "CNAPP"
     ],
+    "palette": {
+      "foreground": "#681b74",
+      "background": "#faf3fc",
+      "border": "#dfbee4"
+    },
     "integrations": [
       {
         "id": "ibm-integration",
@@ -935,13 +1165,18 @@ export const integrationCatalog: Integration[] = [
     "serviceName": "Joe Sandbox",
     "image": {
       "src": "/images/services/joe-sandbox.svg",
-      "alt": "Joe Sandbox"
+      "alt": "Joe Sandbox platform integration listed under CNAPP"
     },
     "platform": "Joe Sandbox",
     "category": "CNAPP",
     "categories": [
       "CNAPP"
     ],
+    "palette": {
+      "foreground": "#1b744e",
+      "background": "#f3fcf8",
+      "border": "#bee4d4"
+    },
     "integrations": [
       {
         "id": "joe-sandbox-integration",
@@ -954,14 +1189,19 @@ export const integrationCatalog: Integration[] = [
     "id": "jupiterone",
     "serviceName": "JupiterOne",
     "image": {
-      "src": "/images/services/jupiterone.svg",
-      "alt": "JupiterOne"
+      "src": "/companies/Jupiter_One_deb5577165.png",
+      "alt": "JupiterOne platform integration listed under CNAPP"
     },
     "platform": "JupiterOne",
     "category": "CNAPP",
     "categories": [
       "CNAPP"
     ],
+    "palette": {
+      "foreground": "#74341b",
+      "background": "#fcf6f3",
+      "border": "#e4c9be"
+    },
     "integrations": [
       {
         "id": "jupiterone-integration",
@@ -975,13 +1215,18 @@ export const integrationCatalog: Integration[] = [
     "serviceName": "Kivera",
     "image": {
       "src": "/images/services/kivera.svg",
-      "alt": "Kivera"
+      "alt": "Kivera platform integration listed under CNAPP"
     },
     "platform": "Kivera",
     "category": "CNAPP",
     "categories": [
       "CNAPP"
     ],
+    "palette": {
+      "foreground": "#1b1c74",
+      "background": "#f3f3fc",
+      "border": "#bebee4"
+    },
     "integrations": [
       {
         "id": "kivera-integration",
@@ -994,14 +1239,19 @@ export const integrationCatalog: Integration[] = [
     "id": "logrhythm",
     "serviceName": "LogRhythm",
     "image": {
-      "src": "/images/services/logrhythm.svg",
-      "alt": "LogRhythm"
+      "src": "/companies/Log_Rhythm_a734e41ced.png",
+      "alt": "LogRhythm platform integration listed under CNAPP"
     },
     "platform": "LogRhythm",
     "category": "CNAPP",
     "categories": [
       "CNAPP"
     ],
+    "palette": {
+      "foreground": "#36741b",
+      "background": "#f6fcf3",
+      "border": "#c9e4be"
+    },
     "integrations": [
       {
         "id": "logrhythm-integration",
@@ -1014,14 +1264,19 @@ export const integrationCatalog: Integration[] = [
     "id": "mandiant",
     "serviceName": "Mandiant",
     "image": {
-      "src": "/images/services/mandiant.svg",
-      "alt": "Mandiant"
+      "src": "/companies/Mandiant_a5e8e2bfe8.png",
+      "alt": "Mandiant platform integration listed under CNAPP"
     },
     "platform": "Mandiant",
     "category": "CNAPP",
     "categories": [
       "CNAPP"
     ],
+    "palette": {
+      "foreground": "#741b4f",
+      "background": "#fcf3f8",
+      "border": "#e4bed5"
+    },
     "integrations": [
       {
         "id": "mandiant-integration",
@@ -1035,13 +1290,18 @@ export const integrationCatalog: Integration[] = [
     "serviceName": "Micro Focus",
     "image": {
       "src": "/images/services/micro-focus.svg",
-      "alt": "Micro Focus"
+      "alt": "Micro Focus platform integration listed under CNAPP"
     },
     "platform": "Micro Focus",
     "category": "CNAPP",
     "categories": [
       "CNAPP"
     ],
+    "palette": {
+      "foreground": "#1b6974",
+      "background": "#f3fbfc",
+      "border": "#bee0e4"
+    },
     "integrations": [
       {
         "id": "micro-focus-integration",
@@ -1054,14 +1314,19 @@ export const integrationCatalog: Integration[] = [
     "id": "mimecast",
     "serviceName": "Mimecast",
     "image": {
-      "src": "/images/services/mimecast.svg",
-      "alt": "Mimecast"
+      "src": "/companies/Mimecast_261052687b.png",
+      "alt": "Mimecast platform integration listed under CNAPP"
     },
     "platform": "Mimecast",
     "category": "CNAPP",
     "categories": [
       "CNAPP"
     ],
+    "palette": {
+      "foreground": "#74641b",
+      "background": "#fcfaf3",
+      "border": "#e4debe"
+    },
     "integrations": [
       {
         "id": "mimecast-integration",
@@ -1074,14 +1339,19 @@ export const integrationCatalog: Integration[] = [
     "id": "netskope",
     "serviceName": "Netskope",
     "image": {
-      "src": "/images/services/netskope.svg",
-      "alt": "Netskope"
+      "src": "/companies/Netskope_f158d46600.png",
+      "alt": "Netskope platform integration listed under CNAPP"
     },
     "platform": "Netskope",
     "category": "CNAPP",
     "categories": [
       "CNAPP"
     ],
+    "palette": {
+      "foreground": "#4a1b74",
+      "background": "#f8f3fc",
+      "border": "#d2bee4"
+    },
     "integrations": [
       {
         "id": "netskope-integration",
@@ -1095,13 +1365,18 @@ export const integrationCatalog: Integration[] = [
     "serviceName": "OCSF",
     "image": {
       "src": "/images/services/ocsf.svg",
-      "alt": "OCSF"
+      "alt": "OCSF platform integration listed under CNAPP"
     },
     "platform": "OCSF",
     "category": "CNAPP",
     "categories": [
       "CNAPP"
     ],
+    "palette": {
+      "foreground": "#1b7431",
+      "background": "#f3fcf5",
+      "border": "#bee4c7"
+    },
     "integrations": [
       {
         "id": "ocsf-integration",
@@ -1114,14 +1389,19 @@ export const integrationCatalog: Integration[] = [
     "id": "oracle",
     "serviceName": "Oracle",
     "image": {
-      "src": "/images/services/oracle.svg",
-      "alt": "Oracle"
+      "src": "/companies/Oracle_cbacf8c8bb.png",
+      "alt": "Oracle platform integration listed under CNAPP"
     },
     "platform": "Oracle",
     "category": "CNAPP",
     "categories": [
       "CNAPP"
     ],
+    "palette": {
+      "foreground": "#741b1f",
+      "background": "#fcf3f4",
+      "border": "#e4bec0"
+    },
     "integrations": [
       {
         "id": "oracle-integration",
@@ -1135,13 +1415,18 @@ export const integrationCatalog: Integration[] = [
     "serviceName": "PagerDuty",
     "image": {
       "src": "/images/services/pagerduty.svg",
-      "alt": "PagerDuty"
+      "alt": "PagerDuty platform integration listed under CNAPP"
     },
     "platform": "PagerDuty",
     "category": "CNAPP",
     "categories": [
       "CNAPP"
     ],
+    "palette": {
+      "foreground": "#1b3974",
+      "background": "#f3f6fc",
+      "border": "#becbe4"
+    },
     "integrations": [
       {
         "id": "pagerduty-integration",
@@ -1155,13 +1440,18 @@ export const integrationCatalog: Integration[] = [
     "serviceName": "PingOne",
     "image": {
       "src": "/images/services/pingone.svg",
-      "alt": "PingOne"
+      "alt": "PingOne platform integration listed under CNAPP"
     },
     "platform": "PingOne",
     "category": "CNAPP",
     "categories": [
       "CNAPP"
     ],
+    "palette": {
+      "foreground": "#53741b",
+      "background": "#f8fcf3",
+      "border": "#d6e4be"
+    },
     "integrations": [
       {
         "id": "pingone-integration",
@@ -1175,13 +1465,18 @@ export const integrationCatalog: Integration[] = [
     "serviceName": "AlienVault",
     "image": {
       "src": "/images/services/alienvault.svg",
-      "alt": "AlienVault"
+      "alt": "AlienVault platform integration listed under IT Operations"
     },
     "platform": "AlienVault",
     "category": "IT Operations",
     "categories": [
       "IT Operations"
     ],
+    "palette": {
+      "foreground": "#741b6d",
+      "background": "#fcf3fb",
+      "border": "#e4bee1"
+    },
     "integrations": [
       {
         "id": "alienvault-integration",
@@ -1195,13 +1490,18 @@ export const integrationCatalog: Integration[] = [
     "serviceName": "Analyst1",
     "image": {
       "src": "/images/services/analyst1.svg",
-      "alt": "Analyst1"
+      "alt": "Analyst1 platform integration listed under IT Operations"
     },
     "platform": "Analyst1",
     "category": "IT Operations",
     "categories": [
       "IT Operations"
     ],
+    "palette": {
+      "foreground": "#1b7461",
+      "background": "#f3fcfa",
+      "border": "#bee4dc"
+    },
     "integrations": [
       {
         "id": "analyst1-integration",
@@ -1214,14 +1514,19 @@ export const integrationCatalog: Integration[] = [
     "id": "aruba",
     "serviceName": "Aruba",
     "image": {
-      "src": "/images/services/aruba.svg",
-      "alt": "Aruba"
+      "src": "/companies/Aruba_c25a6c32b0.png",
+      "alt": "Aruba platform integration listed under IT Operations"
     },
     "platform": "Aruba",
     "category": "IT Operations",
     "categories": [
       "IT Operations"
     ],
+    "palette": {
+      "foreground": "#74471b",
+      "background": "#fcf7f3",
+      "border": "#e4d1be"
+    },
     "integrations": [
       {
         "id": "aruba-integration",
@@ -1235,13 +1540,18 @@ export const integrationCatalog: Integration[] = [
     "serviceName": "AT&T",
     "image": {
       "src": "/images/services/at-t.svg",
-      "alt": "AT&T"
+      "alt": "AT&T platform integration listed under IT Operations"
     },
     "platform": "AT&T",
     "category": "IT Operations",
     "categories": [
       "IT Operations"
     ],
+    "palette": {
+      "foreground": "#2d1b74",
+      "background": "#f5f3fc",
+      "border": "#c6bee4"
+    },
     "integrations": [
       {
         "id": "at-t-integration",
@@ -1254,14 +1564,19 @@ export const integrationCatalog: Integration[] = [
     "id": "attackiq",
     "serviceName": "AttackIQ",
     "image": {
-      "src": "/images/services/attackiq.svg",
-      "alt": "AttackIQ"
+      "src": "/companies/Attack_IQ_fdc8b6d32e.png",
+      "alt": "AttackIQ platform integration listed under IT Operations"
     },
     "platform": "AttackIQ",
     "category": "IT Operations",
     "categories": [
       "IT Operations"
     ],
+    "palette": {
+      "foreground": "#23741b",
+      "background": "#f4fcf3",
+      "border": "#c1e4be"
+    },
     "integrations": [
       {
         "id": "attackiq-integration",
@@ -1275,13 +1590,18 @@ export const integrationCatalog: Integration[] = [
     "serviceName": "Automox",
     "image": {
       "src": "/images/services/automox.svg",
-      "alt": "Automox"
+      "alt": "Automox platform integration listed under IT Operations"
     },
     "platform": "Automox",
     "category": "IT Operations",
     "categories": [
       "IT Operations"
     ],
+    "palette": {
+      "foreground": "#741b3d",
+      "background": "#fcf3f6",
+      "border": "#e4becd"
+    },
     "integrations": [
       {
         "id": "automox-integration",
@@ -1295,13 +1615,18 @@ export const integrationCatalog: Integration[] = [
     "serviceName": "BlackBerry",
     "image": {
       "src": "/images/services/blackberry.svg",
-      "alt": "BlackBerry"
+      "alt": "BlackBerry platform integration listed under IT Operations"
     },
     "platform": "BlackBerry",
     "category": "IT Operations",
     "categories": [
       "IT Operations"
     ],
+    "palette": {
+      "foreground": "#1b5774",
+      "background": "#f3f9fc",
+      "border": "#bed8e4"
+    },
     "integrations": [
       {
         "id": "blackberry-integration",
@@ -1315,13 +1640,18 @@ export const integrationCatalog: Integration[] = [
     "serviceName": "Box",
     "image": {
       "src": "/images/services/box.svg",
-      "alt": "Box"
+      "alt": "Box platform integration listed under IT Operations"
     },
     "platform": "Box",
     "category": "IT Operations",
     "categories": [
       "IT Operations"
     ],
+    "palette": {
+      "foreground": "#71741b",
+      "background": "#fbfcf3",
+      "border": "#e3e4be"
+    },
     "integrations": [
       {
         "id": "box-integration",
@@ -1334,14 +1664,19 @@ export const integrationCatalog: Integration[] = [
     "id": "cisco",
     "serviceName": "Cisco",
     "image": {
-      "src": "/images/services/cisco.svg",
-      "alt": "Cisco"
+      "src": "/companies/Cisco_cc51ff8d4b.png",
+      "alt": "Cisco platform integration listed under IT Operations"
     },
     "platform": "Cisco",
     "category": "IT Operations",
     "categories": [
       "IT Operations"
     ],
+    "palette": {
+      "foreground": "#5d1b74",
+      "background": "#f9f3fc",
+      "border": "#dabee4"
+    },
     "integrations": [
       {
         "id": "cisco-integration",
@@ -1355,13 +1690,18 @@ export const integrationCatalog: Integration[] = [
     "serviceName": "Cribl",
     "image": {
       "src": "/images/services/cribl.svg",
-      "alt": "Cribl"
+      "alt": "Cribl platform integration listed under IT Operations"
     },
     "platform": "Cribl",
     "category": "IT Operations",
     "categories": [
       "IT Operations"
     ],
+    "palette": {
+      "foreground": "#1b7443",
+      "background": "#f3fcf7",
+      "border": "#bee4cf"
+    },
     "integrations": [
       {
         "id": "cribl-integration",
@@ -1375,13 +1715,18 @@ export const integrationCatalog: Integration[] = [
     "serviceName": "CrowdStrike",
     "image": {
       "src": "/images/services/crowdstrike.svg",
-      "alt": "CrowdStrike"
+      "alt": "CrowdStrike platform integration listed under IT Operations"
     },
     "platform": "CrowdStrike",
     "category": "IT Operations",
     "categories": [
       "IT Operations"
     ],
+    "palette": {
+      "foreground": "#74291b",
+      "background": "#fcf4f3",
+      "border": "#e4c4be"
+    },
     "integrations": [
       {
         "id": "crowdstrike-integration",
@@ -1394,14 +1739,19 @@ export const integrationCatalog: Integration[] = [
     "id": "cyberark",
     "serviceName": "CyberArk",
     "image": {
-      "src": "/images/services/cyberark.svg",
-      "alt": "CyberArk"
+      "src": "/companies/Cyberark_1f958a18c7.png",
+      "alt": "CyberArk platform integration listed under IT Operations"
     },
     "platform": "CyberArk",
     "category": "IT Operations",
     "categories": [
       "IT Operations"
     ],
+    "palette": {
+      "foreground": "#1b2774",
+      "background": "#f3f4fc",
+      "border": "#bec3e4"
+    },
     "integrations": [
       {
         "id": "cyberark-integration",
@@ -1414,14 +1764,19 @@ export const integrationCatalog: Integration[] = [
     "id": "cycognito",
     "serviceName": "CyCognito",
     "image": {
-      "src": "/images/services/cycognito.svg",
-      "alt": "CyCognito"
+      "src": "/companies/Cy_Cognito_6bb35cb74a.png",
+      "alt": "CyCognito platform integration listed under IT Operations"
     },
     "platform": "CyCognito",
     "category": "IT Operations",
     "categories": [
       "IT Operations"
     ],
+    "palette": {
+      "foreground": "#41741b",
+      "background": "#f7fcf3",
+      "border": "#cee4be"
+    },
     "integrations": [
       {
         "id": "cycognito-integration",
@@ -1434,14 +1789,19 @@ export const integrationCatalog: Integration[] = [
     "id": "cylus",
     "serviceName": "Cylus",
     "image": {
-      "src": "/images/services/cylus.svg",
-      "alt": "Cylus"
+      "src": "/companies/Cylus_a16172c8e9.png",
+      "alt": "Cylus platform integration listed under IT Operations"
     },
     "platform": "Cylus",
     "category": "IT Operations",
     "categories": [
       "IT Operations"
     ],
+    "palette": {
+      "foreground": "#741b5b",
+      "background": "#fcf3f9",
+      "border": "#e4bed9"
+    },
     "integrations": [
       {
         "id": "cylus-integration",
@@ -1454,14 +1814,19 @@ export const integrationCatalog: Integration[] = [
     "id": "beyondtrust",
     "serviceName": "BeyondTrust",
     "image": {
-      "src": "/images/services/beyondtrust.svg",
-      "alt": "BeyondTrust"
+      "src": "/companies/Beyond_Trust_2c94db65cf.png",
+      "alt": "BeyondTrust platform integration listed under SOAR"
     },
     "platform": "BeyondTrust",
     "category": "SOAR",
     "categories": [
       "SOAR"
     ],
+    "palette": {
+      "foreground": "#1b7473",
+      "background": "#f3fcfb",
+      "border": "#bee4e4"
+    },
     "integrations": [
       {
         "id": "beyondtrust-integration",
@@ -1474,14 +1839,19 @@ export const integrationCatalog: Integration[] = [
     "id": "auth0",
     "serviceName": "Auth0",
     "image": {
-      "src": "/images/services/auth0.svg",
-      "alt": "Auth0"
+      "src": "/companies/Auth0_7f9120be12.png",
+      "alt": "Auth0 platform integration listed under SOAR"
     },
     "platform": "Auth0",
     "category": "SOAR",
     "categories": [
       "SOAR"
     ],
+    "palette": {
+      "foreground": "#74591b",
+      "background": "#fcf9f3",
+      "border": "#e4d9be"
+    },
     "integrations": [
       {
         "id": "auth0-integration",
@@ -1495,13 +1865,18 @@ export const integrationCatalog: Integration[] = [
     "serviceName": "Atlassian",
     "image": {
       "src": "/images/services/atlassian.svg",
-      "alt": "Atlassian"
+      "alt": "Atlassian platform integration listed under SOAR"
     },
     "platform": "Atlassian",
     "category": "SOAR",
     "categories": [
       "SOAR"
     ],
+    "palette": {
+      "foreground": "#3f1b74",
+      "background": "#f7f3fc",
+      "border": "#cebee4"
+    },
     "integrations": [
       {
         "id": "atlassian-integration",
@@ -1515,13 +1890,18 @@ export const integrationCatalog: Integration[] = [
     "serviceName": "At-Bay",
     "image": {
       "src": "/images/services/at-bay.svg",
-      "alt": "At-Bay"
+      "alt": "At-Bay platform integration listed under SOAR"
     },
     "platform": "At-Bay",
     "category": "SOAR",
     "categories": [
       "SOAR"
     ],
+    "palette": {
+      "foreground": "#1b7425",
+      "background": "#f3fcf4",
+      "border": "#bee4c2"
+    },
     "integrations": [
       {
         "id": "at-bay-integration",
@@ -1534,14 +1914,19 @@ export const integrationCatalog: Integration[] = [
     "id": "armis",
     "serviceName": "Armis",
     "image": {
-      "src": "/images/services/armis.svg",
-      "alt": "Armis"
+      "src": "/companies/Armis_f03553ca66.png",
+      "alt": "Armis platform integration listed under SOAR"
     },
     "platform": "Armis",
     "category": "SOAR",
     "categories": [
       "SOAR"
     ],
+    "palette": {
+      "foreground": "#741b2b",
+      "background": "#fcf3f5",
+      "border": "#e4bec5"
+    },
     "integrations": [
       {
         "id": "armis-integration",
@@ -1554,14 +1939,19 @@ export const integrationCatalog: Integration[] = [
     "id": "anomali",
     "serviceName": "Anomali",
     "image": {
-      "src": "/images/services/anomali.svg",
-      "alt": "Anomali"
+      "src": "/companies/Anomali_9e54213c47.png",
+      "alt": "Anomali platform integration listed under SOAR"
     },
     "platform": "Anomali",
     "category": "SOAR",
     "categories": [
       "SOAR"
     ],
+    "palette": {
+      "foreground": "#1b4574",
+      "background": "#f3f7fc",
+      "border": "#bed0e4"
+    },
     "integrations": [
       {
         "id": "anomali-integration",
@@ -1575,13 +1965,18 @@ export const integrationCatalog: Integration[] = [
     "serviceName": "Amazon",
     "image": {
       "src": "/images/services/amazon.svg",
-      "alt": "Amazon"
+      "alt": "Amazon platform integration listed under SOAR"
     },
     "platform": "Amazon",
     "category": "SOAR",
     "categories": [
       "SOAR"
     ],
+    "palette": {
+      "foreground": "#5e741b",
+      "background": "#fafcf3",
+      "border": "#dbe4be"
+    },
     "integrations": [
       {
         "id": "amazon-integration",
@@ -1595,13 +1990,18 @@ export const integrationCatalog: Integration[] = [
     "serviceName": "Alien Labs OTX",
     "image": {
       "src": "/images/services/alien-labs-otx.svg",
-      "alt": "Alien Labs OTX"
+      "alt": "Alien Labs OTX platform integration listed under SOAR"
     },
     "platform": "Alien Labs OTX",
     "category": "SOAR",
     "categories": [
       "SOAR"
     ],
+    "palette": {
+      "foreground": "#6f1b74",
+      "background": "#fbf3fc",
+      "border": "#e2bee4"
+    },
     "integrations": [
       {
         "id": "alien-labs-otx-integration",
@@ -1615,13 +2015,18 @@ export const integrationCatalog: Integration[] = [
     "serviceName": "AbuseIPDB",
     "image": {
       "src": "/images/services/abuseipdb.svg",
-      "alt": "AbuseIPDB"
+      "alt": "AbuseIPDB platform integration listed under SOAR"
     },
     "platform": "AbuseIPDB",
     "category": "SOAR",
     "categories": [
       "SOAR"
     ],
+    "palette": {
+      "foreground": "#1b7455",
+      "background": "#f3fcf9",
+      "border": "#bee4d7"
+    },
     "integrations": [
       {
         "id": "abuseipdb-integration",
@@ -1635,13 +2040,18 @@ export const integrationCatalog: Integration[] = [
     "serviceName": "42Gears",
     "image": {
       "src": "/images/services/42gears.svg",
-      "alt": "42Gears"
+      "alt": "42Gears platform integration listed under SOAR"
     },
     "platform": "42Gears",
     "category": "SOAR",
     "categories": [
       "SOAR"
     ],
+    "palette": {
+      "foreground": "#743b1b",
+      "background": "#fcf6f3",
+      "border": "#e4ccbe"
+    },
     "integrations": [
       {
         "id": "42gears-integration",
@@ -1655,13 +2065,18 @@ export const integrationCatalog: Integration[] = [
     "serviceName": "AIMS",
     "image": {
       "src": "/images/services/aims.svg",
-      "alt": "AIMS"
+      "alt": "AIMS platform integration listed under SOAR"
     },
     "platform": "AIMS",
     "category": "SOAR",
     "categories": [
       "SOAR"
     ],
+    "palette": {
+      "foreground": "#221b74",
+      "background": "#f4f3fc",
+      "border": "#c1bee4"
+    },
     "integrations": [
       {
         "id": "aims-integration",
@@ -1675,13 +2090,18 @@ export const integrationCatalog: Integration[] = [
     "serviceName": "BlueCat Networks",
     "image": {
       "src": "/images/services/bluecat-networks.svg",
-      "alt": "BlueCat Networks"
+      "alt": "BlueCat Networks platform integration listed under SIEM"
     },
     "platform": "BlueCat Networks",
     "category": "SIEM",
     "categories": [
       "SIEM"
     ],
+    "palette": {
+      "foreground": "#2f741b",
+      "background": "#f5fcf3",
+      "border": "#c6e4be"
+    },
     "integrations": [
       {
         "id": "bluecat-networks-integration",
@@ -1694,14 +2114,19 @@ export const integrationCatalog: Integration[] = [
     "id": "check-point",
     "serviceName": "Check Point",
     "image": {
-      "src": "/images/services/check-point.svg",
-      "alt": "Check Point"
+      "src": "/companies/Checkpoint_379f9eb3c1.png",
+      "alt": "Check Point platform integration listed under SIEM"
     },
     "platform": "Check Point",
     "category": "SIEM",
     "categories": [
       "SIEM"
     ],
+    "palette": {
+      "foreground": "#741b48",
+      "background": "#fcf3f7",
+      "border": "#e4bed2"
+    },
     "integrations": [
       {
         "id": "check-point-integration",
@@ -1714,14 +2139,19 @@ export const integrationCatalog: Integration[] = [
     "id": "cloudflare",
     "serviceName": "Cloudflare",
     "image": {
-      "src": "/images/services/cloudflare.svg",
-      "alt": "Cloudflare"
+      "src": "/companies/Cloud_Flare_d79b3b58b9.png",
+      "alt": "Cloudflare platform integration listed under SIEM"
     },
     "platform": "Cloudflare",
     "category": "SIEM",
     "categories": [
       "SIEM"
     ],
+    "palette": {
+      "foreground": "#1b6274",
+      "background": "#f3fafc",
+      "border": "#bedde4"
+    },
     "integrations": [
       {
         "id": "cloudflare-integration",
@@ -1735,13 +2165,18 @@ export const integrationCatalog: Integration[] = [
     "serviceName": "Criminal IP",
     "image": {
       "src": "/images/services/criminal-ip.svg",
-      "alt": "Criminal IP"
+      "alt": "Criminal IP platform integration listed under SIEM"
     },
     "platform": "Criminal IP",
     "category": "SIEM",
     "categories": [
       "SIEM"
     ],
+    "palette": {
+      "foreground": "#746b1b",
+      "background": "#fcfbf3",
+      "border": "#e4e1be"
+    },
     "integrations": [
       {
         "id": "criminal-ip-integration",
@@ -1754,14 +2189,19 @@ export const integrationCatalog: Integration[] = [
     "id": "cybereason",
     "serviceName": "Cybereason",
     "image": {
-      "src": "/images/services/cybereason.svg",
-      "alt": "Cybereason"
+      "src": "/companies/Cybereason_30ef103b1b.png",
+      "alt": "Cybereason platform integration listed under SIEM"
     },
     "platform": "Cybereason",
     "category": "SIEM",
     "categories": [
       "SIEM"
     ],
+    "palette": {
+      "foreground": "#511b74",
+      "background": "#f8f3fc",
+      "border": "#d5bee4"
+    },
     "integrations": [
       {
         "id": "cybereason-integration",
@@ -1774,14 +2214,19 @@ export const integrationCatalog: Integration[] = [
     "id": "darktrace",
     "serviceName": "Darktrace",
     "image": {
-      "src": "/images/services/darktrace.svg",
-      "alt": "Darktrace"
+      "src": "/companies/Dark_Trace_b2474f65e1.png",
+      "alt": "Darktrace platform integration listed under SIEM"
     },
     "platform": "Darktrace",
     "category": "SIEM",
     "categories": [
       "SIEM"
     ],
+    "palette": {
+      "foreground": "#1b7438",
+      "background": "#f3fcf6",
+      "border": "#bee4ca"
+    },
     "integrations": [
       {
         "id": "darktrace-integration",
@@ -1795,13 +2240,18 @@ export const integrationCatalog: Integration[] = [
     "serviceName": "Docker",
     "image": {
       "src": "/images/services/docker.svg",
-      "alt": "Docker"
+      "alt": "Docker platform integration listed under SIEM"
     },
     "platform": "Docker",
     "category": "SIEM",
     "categories": [
       "SIEM"
     ],
+    "palette": {
+      "foreground": "#741e1b",
+      "background": "#fcf3f3",
+      "border": "#e4bfbe"
+    },
     "integrations": [
       {
         "id": "docker-integration",
@@ -1814,14 +2264,19 @@ export const integrationCatalog: Integration[] = [
     "id": "exabeam",
     "serviceName": "Exabeam",
     "image": {
-      "src": "/images/services/exabeam.svg",
-      "alt": "Exabeam"
+      "src": "/companies/Exabeam_632ad5eb9d.png",
+      "alt": "Exabeam platform integration listed under SIEM"
     },
     "platform": "Exabeam",
     "category": "SIEM",
     "categories": [
       "SIEM"
     ],
+    "palette": {
+      "foreground": "#1b3274",
+      "background": "#f3f5fc",
+      "border": "#bec8e4"
+    },
     "integrations": [
       {
         "id": "exabeam-integration",
@@ -1834,14 +2289,19 @@ export const integrationCatalog: Integration[] = [
     "id": "f5-distributed-cloud-services",
     "serviceName": "F5 Distributed Cloud Services",
     "image": {
-      "src": "/images/services/f5-distributed-cloud-services.svg",
-      "alt": "F5 Distributed Cloud Services"
+      "src": "/companies/F5_Networks_29efaf9842.png",
+      "alt": "F5 Distributed Cloud Services platform integration listed under SIEM"
     },
     "platform": "F5 Distributed Cloud Services",
     "category": "SIEM",
     "categories": [
       "SIEM"
     ],
+    "palette": {
+      "foreground": "#4c741b",
+      "background": "#f8fcf3",
+      "border": "#d3e4be"
+    },
     "integrations": [
       {
         "id": "f5-distributed-cloud-services-integration",
@@ -1854,14 +2314,19 @@ export const integrationCatalog: Integration[] = [
     "id": "forescout",
     "serviceName": "Forescout",
     "image": {
-      "src": "/images/services/forescout.svg",
-      "alt": "Forescout"
+      "src": "/companies/Forescout_cf0444200b.png",
+      "alt": "Forescout platform integration listed under SIEM"
     },
     "platform": "Forescout",
     "category": "SIEM",
     "categories": [
       "SIEM"
     ],
+    "palette": {
+      "foreground": "#741b66",
+      "background": "#fcf3fa",
+      "border": "#e4bede"
+    },
     "integrations": [
       {
         "id": "forescout-integration",
@@ -1875,13 +2340,18 @@ export const integrationCatalog: Integration[] = [
     "serviceName": "Graylog",
     "image": {
       "src": "/images/services/graylog.svg",
-      "alt": "Graylog"
+      "alt": "Graylog platform integration listed under SIEM"
     },
     "platform": "Graylog",
     "category": "SIEM",
     "categories": [
       "SIEM"
     ],
+    "palette": {
+      "foreground": "#1b7468",
+      "background": "#f3fcfa",
+      "border": "#bee4df"
+    },
     "integrations": [
       {
         "id": "graylog-integration",
@@ -1895,13 +2365,18 @@ export const integrationCatalog: Integration[] = [
     "serviceName": "HashiCorp",
     "image": {
       "src": "/images/services/hashicorp.svg",
-      "alt": "HashiCorp"
+      "alt": "HashiCorp platform integration listed under SIEM"
     },
     "platform": "HashiCorp",
     "category": "SIEM",
     "categories": [
       "SIEM"
     ],
+    "palette": {
+      "foreground": "#744e1b",
+      "background": "#fcf8f3",
+      "border": "#e4d4be"
+    },
     "integrations": [
       {
         "id": "hashicorp-integration",
@@ -1914,14 +2389,19 @@ export const integrationCatalog: Integration[] = [
     "id": "hp",
     "serviceName": "HP",
     "image": {
-      "src": "/images/services/hp.svg",
-      "alt": "HP"
+      "src": "/companies/HP_93b89db5f7.png",
+      "alt": "HP platform integration listed under SIEM"
     },
     "platform": "HP",
     "category": "SIEM",
     "categories": [
       "SIEM"
     ],
+    "palette": {
+      "foreground": "#341b74",
+      "background": "#f5f3fc",
+      "border": "#c9bee4"
+    },
     "integrations": [
       {
         "id": "hp-integration",
@@ -1935,13 +2415,18 @@ export const integrationCatalog: Integration[] = [
     "serviceName": "Infoblox",
     "image": {
       "src": "/images/services/infoblox.svg",
-      "alt": "Infoblox"
+      "alt": "Infoblox platform integration listed under SIEM"
     },
     "platform": "Infoblox",
     "category": "SIEM",
     "categories": [
       "SIEM"
     ],
+    "palette": {
+      "foreground": "#1c741b",
+      "background": "#f3fcf3",
+      "border": "#bee4be"
+    },
     "integrations": [
       {
         "id": "infoblox-integration",
@@ -1955,13 +2440,18 @@ export const integrationCatalog: Integration[] = [
     "serviceName": "JumpCloud",
     "image": {
       "src": "/images/services/jumpcloud.svg",
-      "alt": "JumpCloud"
+      "alt": "JumpCloud platform integration listed under SIEM"
     },
     "platform": "JumpCloud",
     "category": "SIEM",
     "categories": [
       "SIEM"
     ],
+    "palette": {
+      "foreground": "#741b36",
+      "background": "#fcf3f6",
+      "border": "#e4beca"
+    },
     "integrations": [
       {
         "id": "jumpcloud-integration",
@@ -1975,13 +2465,18 @@ export const integrationCatalog: Integration[] = [
     "serviceName": "Keeper Security",
     "image": {
       "src": "/images/services/keeper-security.svg",
-      "alt": "Keeper Security"
+      "alt": "Keeper Security platform integration listed under Cloud Security"
     },
     "platform": "Keeper Security",
     "category": "Cloud Security",
     "categories": [
       "Cloud Security"
     ],
+    "palette": {
+      "foreground": "#1b5074",
+      "background": "#f3f8fc",
+      "border": "#bed5e4"
+    },
     "integrations": [
       {
         "id": "keeper-security-integration",
@@ -1994,14 +2489,19 @@ export const integrationCatalog: Integration[] = [
     "id": "lacework",
     "serviceName": "Lacework",
     "image": {
-      "src": "/images/services/lacework.svg",
-      "alt": "Lacework"
+      "src": "/companies/Lace_Work_52d9ccb7dd.png",
+      "alt": "Lacework platform integration listed under Cloud Security"
     },
     "platform": "Lacework",
     "category": "Cloud Security",
     "categories": [
       "Cloud Security"
     ],
+    "palette": {
+      "foreground": "#6a741b",
+      "background": "#fbfcf3",
+      "border": "#e0e4be"
+    },
     "integrations": [
       {
         "id": "lacework-integration",
@@ -2015,13 +2515,18 @@ export const integrationCatalog: Integration[] = [
     "serviceName": "Malwarebytes",
     "image": {
       "src": "/images/services/malwarebytes.svg",
-      "alt": "Malwarebytes"
+      "alt": "Malwarebytes platform integration listed under Cloud Security"
     },
     "platform": "Malwarebytes",
     "category": "Cloud Security",
     "categories": [
       "Cloud Security"
     ],
+    "palette": {
+      "foreground": "#641b74",
+      "background": "#faf3fc",
+      "border": "#ddbee4"
+    },
     "integrations": [
       {
         "id": "malwarebytes-integration",
@@ -2035,13 +2540,18 @@ export const integrationCatalog: Integration[] = [
     "serviceName": "Mattermost",
     "image": {
       "src": "/images/services/mattermost.svg",
-      "alt": "Mattermost"
+      "alt": "Mattermost platform integration listed under Cloud Security"
     },
     "platform": "Mattermost",
     "category": "Cloud Security",
     "categories": [
       "Cloud Security"
     ],
+    "palette": {
+      "foreground": "#1b744a",
+      "background": "#f3fcf8",
+      "border": "#bee4d2"
+    },
     "integrations": [
       {
         "id": "mattermost-integration",
@@ -2054,14 +2564,19 @@ export const integrationCatalog: Integration[] = [
     "id": "microsoft",
     "serviceName": "Microsoft",
     "image": {
-      "src": "/images/services/microsoft.svg",
-      "alt": "Microsoft"
+      "src": "/companies/Microsoft_bd16e6984a.png",
+      "alt": "Microsoft platform integration listed under Cloud Security"
     },
     "platform": "Microsoft",
     "category": "Cloud Security",
     "categories": [
       "Cloud Security"
     ],
+    "palette": {
+      "foreground": "#74301b",
+      "background": "#fcf5f3",
+      "border": "#e4c7be"
+    },
     "integrations": [
       {
         "id": "microsoft-integration",
@@ -2075,13 +2590,18 @@ export const integrationCatalog: Integration[] = [
     "serviceName": "MISP TIP",
     "image": {
       "src": "/images/services/misp-tip.svg",
-      "alt": "MISP TIP"
+      "alt": "MISP TIP platform integration listed under Cloud Security"
     },
     "platform": "MISP TIP",
     "category": "Cloud Security",
     "categories": [
       "Cloud Security"
     ],
+    "palette": {
+      "foreground": "#1b2074",
+      "background": "#f3f4fc",
+      "border": "#bec0e4"
+    },
     "integrations": [
       {
         "id": "misp-tip-integration",
@@ -2095,13 +2615,18 @@ export const integrationCatalog: Integration[] = [
     "serviceName": "OAuth",
     "image": {
       "src": "/images/services/oauth.svg",
-      "alt": "OAuth"
+      "alt": "OAuth platform integration listed under Cloud Security"
     },
     "platform": "OAuth",
     "category": "Cloud Security",
     "categories": [
       "Cloud Security"
     ],
+    "palette": {
+      "foreground": "#3a741b",
+      "background": "#f6fcf3",
+      "border": "#cbe4be"
+    },
     "integrations": [
       {
         "id": "oauth-integration",
@@ -2114,14 +2639,19 @@ export const integrationCatalog: Integration[] = [
     "id": "okta",
     "serviceName": "Okta",
     "image": {
-      "src": "/images/services/okta.svg",
-      "alt": "Okta"
+      "src": "/companies/Okta_8bdbaacb86.png",
+      "alt": "Okta platform integration listed under Cloud Security"
     },
     "platform": "Okta",
     "category": "Cloud Security",
     "categories": [
       "Cloud Security"
     ],
+    "palette": {
+      "foreground": "#741b54",
+      "background": "#fcf3f9",
+      "border": "#e4bed6"
+    },
     "integrations": [
       {
         "id": "okta-integration",
@@ -2134,14 +2664,19 @@ export const integrationCatalog: Integration[] = [
     "id": "palo-alto-networks",
     "serviceName": "Palo Alto Networks",
     "image": {
-      "src": "/images/services/palo-alto-networks.svg",
-      "alt": "Palo Alto Networks"
+      "src": "/companies/Palo_Alto_Networks_0c29017a03.png",
+      "alt": "Palo Alto Networks platform integration listed under Cloud Security"
     },
     "platform": "Palo Alto Networks",
     "category": "Cloud Security",
     "categories": [
       "Cloud Security"
     ],
+    "palette": {
+      "foreground": "#1b6e74",
+      "background": "#f3fbfc",
+      "border": "#bee2e4"
+    },
     "integrations": [
       {
         "id": "palo-alto-networks-integration",
@@ -2155,13 +2690,18 @@ export const integrationCatalog: Integration[] = [
     "serviceName": "Prometheus",
     "image": {
       "src": "/images/services/prometheus.svg",
-      "alt": "Prometheus"
+      "alt": "Prometheus platform integration listed under Cloud Security"
     },
     "platform": "Prometheus",
     "category": "Cloud Security",
     "categories": [
       "Cloud Security"
     ],
+    "palette": {
+      "foreground": "#74601b",
+      "background": "#fcfaf3",
+      "border": "#e4dcbe"
+    },
     "integrations": [
       {
         "id": "prometheus-integration",

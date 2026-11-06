@@ -18,7 +18,7 @@ button { font: inherit; }
   margin-top: clamp(1.25rem, 3svh, 2rem);
 }
 .snapshots-spiral {
-  height: clamp(15rem, calc(100svh - 16rem), 40rem);
+  height: clamp(15rem, calc(100svh - 23rem), 40rem);
 }
 
 .integration-modal {
@@ -39,9 +39,16 @@ button { font: inherit; }
 
 @media (min-width: 1024px) {
   .snapshots-section {
-    --snapshots-stage-height: clamp(18rem, calc(100svh - 16rem), 40rem);
+    --snapshots-stage-height: clamp(18rem, calc(100svh - 23rem), 40rem);
   }
   .snapshots-spiral {
     height: var(--snapshots-stage-height);
   }
+  .snapshots-details {
+    display: flex;
+    flex-direction: column;
+    max-height: var(--snapshots-stage-height);
+  }
+  .snapshots-details > p, .snapshots-details > div { flex-shrink: 0; }
+  .snapshots-card { flex-shrink: 1; }
 }

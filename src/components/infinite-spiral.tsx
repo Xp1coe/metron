@@ -106,6 +106,17 @@ export default function InfiniteSpiral({
   );
 
   useEffect(() => {
+    // Filtering changes the catalog, so restart at the first matching platform.
+    progressRef.current = targetProgressRef.current = autoSpeedRef.current = 0;
+    for (const card of cardRefs.current) {
+      if (!card) continue;
+      card.style.opacity = "0";
+      card.style.pointerEvents = "none";
+      card.style.willChange = "auto";
+    }
+  }, [normalizedItems]);
+
+  useEffect(() => {
     const root = rootRef.current;
     if (!root || normalizedItems.length === 0) return;
     let frameId = 0;
@@ -150,7 +161,9 @@ export default function InfiniteSpiral({
       frameId = 0;
       const delta = Math.min((time - previousTime) / 1000, 0.05);
       previousTime = time;
-      const autoEnabled = animationMode === "auto" || animationMode === "all";
+      const autoEnabled =
+        normalizedItems.length > 1 &&
+        (animationMode === "auto" || animationMode === "all");
       const motionPaused =
         paused ||
         draggingRef.current ||

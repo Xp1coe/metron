@@ -16,6 +16,7 @@ export interface DriftWallItem {
   id?: string | number;
   image: string;
   title?: string;
+  alt?: string;
   href?: string;
 }
 
@@ -48,6 +49,7 @@ export interface DriftWallProps {
   paused?: boolean;
   onItemSelect?: (item: DriftWallItem) => void;
   onItemActivate?: (item: DriftWallItem) => void;
+  onItemHover?: (item: DriftWallItem, anchor: DOMRect) => void;
 }
 
 const EMPTY_ITEMS: DriftWallItem[] = [];
@@ -86,6 +88,7 @@ export default function DriftWall({
   paused = false,
   onItemSelect,
   onItemActivate,
+  onItemHover,
 }: DriftWallProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const planeRef = useRef<HTMLDivElement>(null);
@@ -396,7 +399,7 @@ export default function DriftWall({
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={item.image}
-                        alt={item.title ?? ""}
+                        alt={item.alt ?? item.title ?? ""}
                         loading="lazy"
                         decoding="async"
                         draggable={false}
@@ -420,11 +423,27 @@ export default function DriftWall({
                       copy === Math.floor(columnMeta[column].copies / 2)
                         ? 0
                         : -1,
-                    onFocus: (event: FocusEvent<HTMLElement>) =>
-                      focusTile(event, key, column, copy, index, item),
-                    onPointerEnter: () => activate(key, column, item),
-                    onClick: () => {
+                    onFocus: (event: FocusEvent<HTMLElement>) => {
+                      focusTile(event, key, column, copy, index, item);
+                      onItemHover?.(
+                        item,
+                        event.currentTarget.getBoundingClientRect(),
+                      );
+                    },
+                    onPointerEnter: (event: PointerEvent<HTMLElement>) => {
+                      activate(key, column, item);
+                      if (event.pointerType === "mouse")
+                        onItemHover?.(
+                          item,
+                          event.currentTarget.getBoundingClientRect(),
+                        );
+                    },
+                    onClick: (event: React.MouseEvent<HTMLElement>) => {
                       onItemSelect?.(item);
+                      onItemHover?.(
+                        item,
+                        event.currentTarget.getBoundingClientRect(),
+                      );
                       onItemActivate?.(item);
                     },
                   };

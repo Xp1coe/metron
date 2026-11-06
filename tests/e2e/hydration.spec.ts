@@ -98,6 +98,7 @@ test("spiral limits per-frame work and stops updates while idle or offscreen", a
 
 test("initial load and reload hydrate cleanly and support platform selection", async ({
   page,
+  isMobile,
 }) => {
   for (let visit = 0; visit < 2; visit++) {
     if (visit === 0) await page.goto("/");
@@ -140,7 +141,19 @@ test("initial load and reload hydrate cleanly and support platform selection", a
       await okta.focus();
       await expect(okta).toHaveAttribute("aria-pressed", "true");
 
-      await expect(section.locator(".snapshots-details")).toHaveCount(0);
+      if (view === "spiral" && !isMobile) {
+        await expect(section.locator(".snapshots-details")).toBeVisible();
+        await expect(
+          section
+            .locator(".snapshots-details")
+            .getByRole("heading", { name: "Okta", level: 3, exact: true }),
+        ).toBeVisible();
+        await expect(page.getByRole("dialog")).toBeHidden();
+        continue;
+      }
+      if (view === "wall")
+        await expect(section.locator(".snapshots-details")).toHaveCount(0);
+      else await expect(section.locator(".snapshots-details")).toBeHidden();
       await expect(page.getByRole("dialog")).toBeHidden();
       await page.keyboard.press("Enter");
       const dialog = page.getByRole("dialog");
@@ -155,4 +168,73 @@ test("initial load and reload hydrate cleanly and support platform selection", a
       await expect(okta).toBeFocused();
     }
   }
+});
+
+test("search and category controls stay synchronized across galleries", async ({
+  page,
+}) => {
+  await page.goto("/");
+  const spiral = page.locator('[data-gallery-view="spiral"]');
+  const wall = page.locator('[data-gallery-view="wall"]');
+  await spiral.getByLabel("Search integrations").fill("wiz");
+  await expect(spiral.locator('[role="listitem"]')).toHaveCount(1);
+  await expect(wall.getByLabel("Search integrations")).toHaveValue("wiz");
+  await spiral.getByLabel("Filter by category").selectOption("CSPM");
+  await expect(wall.getByLabel("Filter by category")).toHaveValue("CSPM");
+  await expect(spiral.getByRole("status")).toHaveText(
+    "Showing 1 of 108 platforms",
+  );
+  await spiral.getByLabel("Filter by category").selectOption("SOAR");
+  await expect(
+    spiral.getByText("No integrations match your search.", { exact: false }),
+  ).toBeVisible();
+  await expect(spiral.getByRole("status")).toHaveText(
+    "Showing 0 of 108 platforms",
+  );
+  await spiral.getByRole("button", { name: "Reset filters" }).click();
+  await expect(spiral.locator('[role="listitem"]')).toHaveCount(108);
+  await expect(wall.getByLabel("Search integrations")).toHaveValue("");
+  await expect(wall.getByLabel("Filter by category")).toHaveValue("");
+  await expect(
+    spiral.locator('[role="listitem"]').first().locator("img"),
+  ).toHaveAttribute(
+    "alt",
+    "Qualys platform integration listed under Threat Intelligence",
+  );
+});
+
+test("server metadata includes the image catalog and a working social preview", async ({
+  page,
+  request,
+}) => {
+  const response = await request.get("/");
+  const html = await response.text();
+  expect(html).toContain("application/ld+json");
+  expect(html).toContain('"numberOfItems":108');
+  expect(html).toContain(
+    "Qualys platform integration listed under Threat Intelligence",
+  );
+  await page.goto("/");
+  await expect(page).toHaveTitle(
+    "Case Snapshots | Metron Security Integrations",
+  );
+  await expect(page.locator('meta[name="description"]')).toHaveAttribute(
+    "content",
+    /108 security and ITOps platforms across 8 categories/,
+  );
+  await expect(page.locator('meta[property="og:image:alt"]')).toHaveAttribute(
+    "content",
+    /Metron Security Case Snapshots/,
+  );
+  await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute(
+    "content",
+    "summary_large_image",
+  );
+  const imageUrl = await page
+    .locator('meta[property="og:image"]')
+    .getAttribute("content");
+  expect(imageUrl).toBeTruthy();
+  const image = await request.get(imageUrl!);
+  expect(image.ok()).toBe(true);
+  expect(image.headers()["content-type"]).toContain("image/png");
 });

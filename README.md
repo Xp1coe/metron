@@ -7,7 +7,9 @@ npm install
 npm run dev
 ```
 
-Open http://localhost:3000. The **Spiral** appears first; scroll down to the second **Case Snapshots** section with Drift Wall to browse the same catalog. Hover, focus, or select a card to update its details. Both galleries span the available screen width. Click, tap, or activate a card on any device to open a modal with a header, scrollable content, and footer. Drag the spiral to browse platforms; rear cards fade as they cross the center. Automatic animation pauses on hover, keyboard focus, or while the modal is open, and respects reduced motion.
+Open http://localhost:3000. The first **Case Snapshots** section has the spiral and its original desktop Spotlight panel; mobile uses a details modal. Scroll down to the second **Case Snapshots** section for the full-width Drift Wall, which uses modal details on all devices. Hover, focus, or select a card to update its details. Drag the spiral to browse platforms; rear cards fade as they cross the center. Automatic animation pauses on hover, keyboard focus, or while the modal is open, and respects reduced motion.
+
+Search platform names, integration names, descriptions, or categories using the search bar. Combine the query with a category filter. Controls in both sections stay synchronized through Redux, show the result count, and offer a reset action. A filtered-out selection falls back to the first matching platform; no results show an empty state.
 
 ## Directory structure
 
@@ -23,6 +25,7 @@ src/
     viewport-gallery.tsx      # Mount animations when close to the viewport
     integration-details.tsx    # Shared platform metadata and descriptions
     integration-modal.tsx      # Mobile dialog, focus handling, and scroll lock
+    integration-filters.tsx    # Shared search and category controls
   data/
     integrations.ts           # Imported platform catalog from the workbook
   features/integrations/
@@ -41,7 +44,7 @@ The root layout wraps the app in `StoreProvider`. Its lazy initializer creates a
 
 ## Updating the data
 
-Edit `src/data/integrations.ts`. Every service has `id`, `serviceName`, `image: { src, alt }`, `platform`, `category`, and an `integrations` array containing `id`, `name`, and `description`. Image paths resolve from `public/`.
+Edit `src/data/integrations.ts`. Every service has `id`, `serviceName`, `image: { src, alt }`, `platform`, `category`, `categories`, `palette: { foreground, background, border }`, and an `integrations` array containing `id`, `name`, and `description`. Image paths resolve from `public/`. Every image description includes its platform name and category memberships, and is passed to the spiral, wall, and detail images. Each platform has a distinct palette used by its text artwork and metadata; palette text has at least 4.5:1 contrast against its background.
 
 The catalog contains 108 platforms and all 111 assignments across eight categories from `tests/Platform List.xlsx`. Platforms listed in multiple categories are merged, with all memberships retained in `categories` and summarized in `category`. The workbook supplies names and categories only: integration labels use the platform names, descriptions remain empty, and the UI displays a missing-description message. SVG images are text placeholders, not official brand logos. Category assignments are preserved as supplied, including unusual classifications.
 
@@ -60,7 +63,13 @@ npm run test:e2e
 
 The spiral implementation is based on the React Bits source supplied in the task. The extended API adds `selectedId`, `onItemSelect` for hover/focus/selection, `onItemActivate` for click/tap/keyboard activation, and `paused` for external control.
 
-The Drift Wall uses the other supplied React Bits component, with responsive column counts, native keyboard-operable buttons, callbacks into Redux, and visibility/reduced-motion handling. Both sections share the details components and show details in a modal on all devices.
+The Drift Wall uses the other supplied React Bits component, with responsive column counts, native keyboard-operable buttons, callbacks into Redux, and visibility/reduced-motion handling. Both sections share the detail components; the spiral retains its inline desktop panel and mobile modal, and the wall uses modal details on all devices.
+
+## SEO and image metadata
+
+Next.js App Router's server-rendered Metadata API fills Helmet's role. `src/lib/site-metadata.ts` defines the title, description, canonical URL, Open Graph and Twitter card tags, and a JSON-LD catalog containing all platform image URLs and captions. `src/app/opengraph-image.tsx` generates a cached PNG share image with descriptive alt text at build time. No client-side Helmet provider or external image requests are needed.
+
+Set `NEXT_PUBLIC_SITE_URL` to the canonical deployment URL when using a custom domain. Otherwise the Vercel production domain is used when available, with localhost as the development fallback. The SVG artwork remains a colored text placeholder rather than an official logo.
 
 ## Animation performance
 

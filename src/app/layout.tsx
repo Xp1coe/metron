@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import { Geist, Geist_Mono } from "next/font/google";
 import StoreProvider from "@/store/provider";
+import { siteMetadata } from "@/lib/site-metadata";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -14,10 +15,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "Case Snapshots | Metron Security",
-  description: "Explore security and ITOps integrations with Metron.",
-};
+export const metadata: Metadata = siteMetadata;
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
@@ -26,7 +24,16 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <Suspense fallback={<div role="status" className="grid min-h-screen place-items-center text-slate-500">Loading integrationsâ€¦</div>}>
+        <Suspense
+          fallback={
+            <div
+              role="status"
+              className="grid min-h-screen place-items-center text-slate-500"
+            >
+              Loading integrationsâ€¦
+            </div>
+          }
+        >
           <StoreProvider>{children}</StoreProvider>
         </Suspense>
       </body>

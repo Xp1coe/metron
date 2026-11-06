@@ -10,7 +10,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 ## Hydration verification
 
-- For UI changes, run `npm run test:e2e` in addition to relevant unit checks and the production build. The Playwright suite checks desktop and mobile initial loads, reloads, and integration selection for hydration warnings and uncaught browser errors.
+- The user requested that E2E testing stop. Do not run Playwright/E2E or browser smoke tests unless the user explicitly requests them again. Use relevant unit tests, lint, and production builds for verification. The existing E2E suite remains available but is not run automatically.
 - Keep the first server and client render deterministic. Read browser APIs in effects or event handlers and use CSS for responsive layout.
 - Do not hide hydration bugs with broad `suppressHydrationWarning` usage or disable SSR as a workaround.
 - If a warning contains `bis_skin_checked`, `bis_register`, or `cz-shortcut-listen`, compare with a clean browser profile first. These attributes were observed in local browser-extension mutations, not in application markup.

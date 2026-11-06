@@ -5,26 +5,29 @@ import DriftWall from "./drift-wall";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { selectIntegration } from "@/features/integrations/integrations-slice";
 import {
-  selectAllIntegrations,
-  selectSelectedIntegration,
+  selectFilteredIntegrations,
+  selectVisibleSelectedIntegration,
 } from "@/features/integrations/selectors";
 
 export default function PlatformDriftWall({
   paused = false,
   onActivate,
+  onPreview,
 }: {
   paused?: boolean;
   onActivate: () => void;
+  onPreview?: (id: string, anchor: DOMRect) => void;
 }) {
   const dispatch = useAppDispatch();
-  const integrations = useAppSelector(selectAllIntegrations);
-  const selected = useAppSelector(selectSelectedIntegration);
+  const integrations = useAppSelector(selectFilteredIntegrations);
+  const selected = useAppSelector(selectVisibleSelectedIntegration);
   const items = useMemo(
     () =>
       integrations.map((item) => ({
         id: item.id,
         image: item.image.src,
         title: item.serviceName,
+        alt: item.image.alt,
       })),
     [integrations],
   );
@@ -55,6 +58,9 @@ export default function PlatformDriftWall({
         if (typeof item.id === "string") dispatch(selectIntegration(item.id));
       }}
       onItemActivate={onActivate}
+      onItemHover={(item, anchor) => {
+        if (typeof item.id === "string") onPreview?.(item.id, anchor);
+      }}
     />
   );
 }
