@@ -44,15 +44,4 @@ button { font: inherit; }
   .snapshots-spiral {
     height: var(--snapshots-stage-height);
   }
-  .snapshots-details {
-    display: flex;
-    flex-direction: column;
-    max-height: var(--snapshots-stage-height);
-  }
-  .snapshots-details > p, .snapshots-details > div {
-    flex-shrink: 0;
-  }
-  .snapshots-card {
-    flex-shrink: 1;
-  }
 }

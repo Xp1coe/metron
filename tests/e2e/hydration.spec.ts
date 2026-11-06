@@ -98,7 +98,6 @@ test("spiral limits per-frame work and stops updates while idle or offscreen", a
 
 test("initial load and reload hydrate cleanly and support platform selection", async ({
   page,
-  isMobile,
 }) => {
   for (let visit = 0; visit < 2; visit++) {
     if (visit === 0) await page.goto("/");
@@ -108,7 +107,7 @@ test("initial load and reload hydrate cleanly and support platform selection", a
     }
 
     await expect(
-      page.getByRole("heading", { name: "Case Snapshots" }),
+      page.getByRole("heading", { name: "Case Snapshots", level: 1 }),
     ).toBeVisible();
     // This only changes after client effects have run; then exercise Redux handlers.
     await expect
@@ -141,28 +140,19 @@ test("initial load and reload hydrate cleanly and support platform selection", a
       await okta.focus();
       await expect(okta).toHaveAttribute("aria-pressed", "true");
 
-      if (isMobile) {
-        await expect(section.locator(".snapshots-details")).toBeHidden();
-        await expect(page.getByRole("dialog")).toBeHidden();
-        await page.keyboard.press("Enter");
-        const dialog = page.getByRole("dialog");
-        await expect(dialog).toBeVisible();
-        await expect(
-          dialog.getByRole("heading", { name: "Okta", level: 3, exact: true }),
-        ).toBeVisible();
-        await expect(dialog.locator("header")).toBeVisible();
-        await expect(dialog.locator("footer")).toBeVisible();
-        await dialog.getByRole("button", { name: "Done", exact: true }).click();
-        await expect(dialog).toBeHidden();
-        await expect(okta).toBeFocused();
-      } else {
-        await expect(
-          section
-            .locator(".snapshots-details")
-            .getByRole("heading", { name: "Okta", level: 3, exact: true }),
-        ).toBeVisible();
-        await expect(page.getByRole("dialog")).toBeHidden();
-      }
+      await expect(section.locator(".snapshots-details")).toHaveCount(0);
+      await expect(page.getByRole("dialog")).toBeHidden();
+      await page.keyboard.press("Enter");
+      const dialog = page.getByRole("dialog");
+      await expect(dialog).toBeVisible();
+      await expect(
+        dialog.getByRole("heading", { name: "Okta", level: 3, exact: true }),
+      ).toBeVisible();
+      await expect(dialog.locator("header")).toBeVisible();
+      await expect(dialog.locator("footer")).toBeVisible();
+      await dialog.getByRole("button", { name: "Done", exact: true }).click();
+      await expect(dialog).toBeHidden();
+      await expect(okta).toBeFocused();
     }
   }
 });

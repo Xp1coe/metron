@@ -7,7 +7,7 @@ npm install
 npm run dev
 ```
 
-Open http://localhost:3000. The **Spiral** appears first; scroll down to the separate **Platform Drift Wall** section to browse the same catalog. Hover, focus, or select a card to update its details. Below 1024px, tap or activate a card to open a modal with a header, scrollable content, and footer. Desktop keeps the inline details panel. Drag the spiral to browse platforms; rear cards fade as they cross the center. Automatic animation pauses on hover, keyboard focus, or while the modal is open, and respects reduced motion.
+Open http://localhost:3000. The **Spiral** appears first; scroll down to the second **Case Snapshots** section with Drift Wall to browse the same catalog. Hover, focus, or select a card to update its details. Both galleries span the available screen width. Click, tap, or activate a card on any device to open a modal with a header, scrollable content, and footer. Drag the spiral to browse platforms; rear cards fade as they cross the center. Automatic animation pauses on hover, keyboard focus, or while the modal is open, and respects reduced motion.
 
 ## Directory structure
 
@@ -60,7 +60,7 @@ npm run test:e2e
 
 The spiral implementation is based on the React Bits source supplied in the task. The extended API adds `selectedId`, `onItemSelect` for hover/focus/selection, `onItemActivate` for click/tap/keyboard activation, and `paused` for external control.
 
-The Drift Wall uses the other supplied React Bits component, with responsive column counts, native keyboard-operable buttons, callbacks into Redux, and visibility/reduced-motion handling. Both views share the details components and modal.
+The Drift Wall uses the other supplied React Bits component, with responsive column counts, native keyboard-operable buttons, callbacks into Redux, and visibility/reduced-motion handling. Both sections share the details components and show details in a modal on all devices.
 
 ## Animation performance
 

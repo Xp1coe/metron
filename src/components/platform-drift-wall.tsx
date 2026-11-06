@@ -32,7 +32,7 @@ export default function PlatformDriftWall({
   return (
     <DriftWall
       items={items}
-      columns={5}
+      columns={8}
       tileWidth={144}
       tileHeight={112}
       gap={12}
