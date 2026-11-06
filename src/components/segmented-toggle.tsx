@@ -1,8 +1,13 @@
 "use client";
 
+import type { ReactNode } from "react";
+
 export interface SegmentedToggleOption<Value extends string> {
   value: Value;
+  /** Accessible name and tooltip. Shown as text when there is no icon. */
   label: string;
+  /** Replaces the visible label. The label still names the button. */
+  icon?: ReactNode;
   disabled?: boolean;
   /** Explains a disabled option. */
   hint?: string;
@@ -40,13 +45,20 @@ export default function SegmentedToggle<Value extends string>({
           <button
             key={option.value}
             type="button"
+            aria-label={option.icon ? option.label : undefined}
             aria-pressed={pressed}
             disabled={option.disabled}
-            title={option.disabled ? option.hint : undefined}
+            title={
+              option.disabled && option.hint
+                ? `${option.label}. ${option.hint}`
+                : option.icon
+                  ? option.label
+                  : undefined
+            }
             onClick={() => onChange(option.value)}
-            className={`h-full min-w-24 flex-1 cursor-pointer whitespace-nowrap px-4 text-sm font-semibold transition-colors focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-blue-600 disabled:cursor-not-allowed disabled:text-slate-400 motion-reduce:transition-none ${pressed ? "bg-[#0739cf] text-white" : "text-slate-600 enabled:hover:bg-slate-50"}`}
+            className={`flex h-full flex-1 cursor-pointer items-center justify-center whitespace-nowrap font-semibold transition-colors focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-blue-600 disabled:cursor-not-allowed disabled:text-slate-300 motion-reduce:transition-none ${option.icon ? "min-w-14 px-4 text-2xl" : "min-w-24 px-4 text-sm"} ${pressed ? "bg-[#0739cf] text-white" : "text-slate-600 enabled:hover:bg-slate-50"}`}
           >
-            {option.label}
+            {option.icon ?? option.label}
           </button>
         );
       })}

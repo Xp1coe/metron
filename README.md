@@ -9,7 +9,7 @@ npm run dev
 
 Open http://localhost:3000. The page has one **Case Snapshots** section with two toggles.
 
-- **Gallery toggle (below the heading):** switches between **Drift wall** and **Spiral**. Drift wall comes first and is the default.
+- **Gallery toggle (below the heading):** switches between **Drift wall** and **Spiral**. Drift wall comes first and is the default. The buttons show icons from `react-icons`; each has a tooltip and an accessible name.
 - **Show as toggle (beside the search and category filter):** switches between the chosen animated gallery and **Grid view**, a simple grid of app icons for every platform.
 
 The two galleries behave as follows.
@@ -30,6 +30,7 @@ src/
   components/
     case-snapshots.tsx         # The section: toggles, filters, gallery, Spotlight, modal
     segmented-toggle.tsx       # Two-option toggle used for Gallery and Show as
+    gallery-icons.tsx          # Names and react-icons icons for the toggle options
     infinite-spiral.tsx        # Supplied React Bits component + selection support
     drift-wall.tsx             # React Bits wall with adaptive columns and selection
     platform-drift-wall.tsx    # Redux-connected wall using the same catalog

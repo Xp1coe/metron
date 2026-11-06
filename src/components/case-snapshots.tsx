@@ -8,6 +8,7 @@ import IntegrationModal from "./integration-modal";
 import IntegrationFilters from "./integration-filters";
 import IntegrationAppGrid from "./integration-app-grid";
 import SegmentedToggle from "./segmented-toggle";
+import { galleryOptions } from "./gallery-icons";
 import {
   IntegrationDescriptions,
   PlatformMetadata,
@@ -157,8 +158,8 @@ export default function CaseSnapshots() {
           value={view}
           onChange={(next) => dispatch(setGalleryView(next))}
           options={[
-            { value: "wall", label: "Drift wall" },
-            { value: "spiral", label: "Spiral" },
+            { value: "wall", ...galleryOptions.wall },
+            { value: "spiral", ...galleryOptions.spiral },
           ]}
         />
       </header>

@@ -3,6 +3,7 @@
 import { useId } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import SegmentedToggle from "./segmented-toggle";
+import { galleryOptions, gridOption } from "./gallery-icons";
 import {
   resetIntegrationFilters,
   setGalleryLayout,
@@ -107,12 +108,12 @@ export default function IntegrationFilters() {
             options={[
               {
                 value: "animation",
-                label: view === "wall" ? "Drift wall" : "Spiral",
+                ...galleryOptions[view],
                 // Search and category results are always shown as a grid.
                 disabled: filtered,
                 hint: "Reset the filters to show this view",
               },
-              { value: "grid", label: "Grid view" },
+              { value: "grid", ...gridOption },
             ]}
           />
         </div>
